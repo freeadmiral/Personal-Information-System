@@ -28,6 +28,8 @@ app.listen(port, () => {
     console.log(`The server is running on ${port} port`);
 });
 
-export function getCustomers() {
+const customer = function getCustomers() {
     return customers;
 }
+
+module.exports = customer;
