@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Input from "./common/Input";
 
-class LoginForm extends Component {
-  state = { account: { company: "", username: "", password: "" } };
+class RegisterForm extends Component {
+  state = { account: { username: "", password: "", name: "" } };
 
   handleChange = ({ currentTarget: input }) => {
     const account = { ...this.state.account };
@@ -12,23 +12,15 @@ class LoginForm extends Component {
   render() {
     const { account } = this.state;
     return (
-      <div className="container" className="col-md-3 offset-4">
-        <form className="m-5">
-          <Input
-            onChange={this.handleChange}
-            value={account.company}
-            name="company"
-            type="text"
-            label="Firma Kodu"
-            placeholder="Firma Kodunuz"
-          />
+      <div className="container">
+        <form>
           <Input
             onChange={this.handleChange}
             value={account.username}
             name="username"
             type="text"
             label="Username"
-            placeholder="Kullanıcı Adını Girin"
+            placeholder="Enter Username"
           />
           <Input
             onChange={this.handleChange}
@@ -36,10 +28,18 @@ class LoginForm extends Component {
             name="password"
             type="password"
             label="Password"
-            placeholder="Şifrenizi Girin"
+            placeholder="Enter Password"
+          />
+          <Input
+            onChange={this.handleChange}
+            value={account.name}
+            name="name"
+            type="text"
+            label="Name"
+            placeholder="Enter Name"
           />
           <button type="submit" className="btn btn-primary">
-            Giriş Yap
+            Login
           </button>
         </form>
       </div>
@@ -47,4 +47,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default RegisterForm;
