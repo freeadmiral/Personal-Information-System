@@ -1,28 +1,26 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const app = express();
 
-const port = 5000;
+//DB Config
+const db = require('./config/keys').MongoURI;
 
-app.get('/api/customers', (req, res) => {
-    const customers = [{
-            id: 1,
-            name: "john",
-            surname: "bage"
-        },
-        {
-            id: 2,
-            name: "david",
-            surname: "huge"
-        },
-        {
-            id: 3,
-            name: "elon",
-            surname: "hawk"
-        }
-    ];
-    res.json(customers);
-});
+//Mongo DB
+mongoose.connect(db, {
+    useNewUrlParser: true
+}).then(() => {
+    console.log("Mongo DB Connected");
+}).catch((err) => {
+    console.log(err);
+})
+
+//BodyParser
+app.use(express.urlencoded({
+    extended: true
+}));
+
+const port = 5000;
 
 app.listen(port, () => {
     console.log(`The server is running on ${port} port`);
