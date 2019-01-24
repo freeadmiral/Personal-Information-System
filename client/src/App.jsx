@@ -5,7 +5,7 @@ import LoginForm from "./components/LoginForm";
 class App extends Component {
   render() {
     return (
-      <div>
+      <div style={{ margin: 100 }}>
         <LoginForm />
       </div>
     );

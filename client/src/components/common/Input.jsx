@@ -1,20 +1,26 @@
 import React from "react";
+import { Input } from "antd";
 
-const Input = ({ name, label, type, placeholder, value, onChange }) => {
+const Inputs = ({
+  name,
+  placeholder,
+  value,
+  onChange,
+  prefix,
+  type = "text"
+}) => {
   return (
-    <div className="form-group">
-      <label htmlFor={name}>{label}</label>
-      <input
-        onChange={onChange}
-        value={value}
-        className="form-control"
-        name={name}
-        type={type}
-        id={name}
-        placeholder={placeholder}
-      />
-    </div>
+    <Input
+      prefix={prefix}
+      style={{ margin: 15 }}
+      name={name}
+      id={name}
+      placeholder={placeholder}
+      value={value}
+      type={type}
+      onChange={onChange}
+    />
   );
 };
 
-export default Input;
+export default Inputs;
