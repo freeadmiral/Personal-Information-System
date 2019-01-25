@@ -4,13 +4,13 @@ const UserSchema = new mongoose.Schema({
     companyId: mongoose.Schema.Types.ObjectId,
     name: {
         type: String,
-        //required: true,
+        required: true,
         maxlength: 30,
         minlength: 3
     },
     surname: {
         type: String,
-        //required: true,
+        required: true,
         maxlength: 30,
         minlength: 3
     },
@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
     },
     username: {
         type: String,
-        //required: true,
+        required: true,
         unique: true,
         maxlength: 20,
         minlength: 3
@@ -40,11 +40,11 @@ const UserSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        //required: true
+        required: true
     },
     registraitonNo: {
         type: Number,
-        //required: true
+        required: true
 
     },
     createdAt: {
