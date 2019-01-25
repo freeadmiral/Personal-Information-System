@@ -1,25 +1,25 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-    companyId: Schema.Types.ObjectId,
+    companyId: mongoose.Schema.Types.ObjectId,
     name: {
         type: String,
-        required: true,
+        //required: true,
         maxlength: 30,
         minlength: 3
     },
     surname: {
         type: String,
-        required: true,
+        //required: true,
         maxlength: 30,
         minlength: 3
     },
-    dogumTarihi: {
+    birthDate: {
         type: Date
     },
     username: {
         type: String,
-        required: true,
+        //required: true,
         unique: true,
         maxlength: 20,
         minlength: 3
@@ -28,23 +28,23 @@ const UserSchema = new mongoose.Schema({
         type: String,
         minlength: [3, '({PATH}), ({MİNLENGTH}) karakterden az olamaz!']
     },
-    bolum: {
+    department: {
         type: String,
 
     },
-    GirisTarihi: {
+    entryDate: {
         type: Date
     },
-    pozisyon: {
-        type: string
+    position: {
+        type: String
     },
-    cinsiyet: {
+    gender: {
         type: String,
-        required: true
+        //required: true
     },
-    sicilno: {
+    registraitonNo: {
         type: Number,
-        required: true
+        //required: true
 
     },
     createdAt: {
