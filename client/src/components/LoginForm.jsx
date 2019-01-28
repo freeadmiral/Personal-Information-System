@@ -5,10 +5,16 @@ import { Link } from "react-router-dom";
 import FormClass from "./common/Form";
 import { Avatar } from "antd";
 import logo from "../Header-Icon-User.png";
+import { login } from "../services/authServices";
 
 class LoginForm extends FormClass {
   state = {
     account: { company: "", username: "", password: "" }
+  };
+
+  doSubmit = async () => {
+    const { account } = this.state;
+    await login(account.username, account.password);
   };
 
   render() {

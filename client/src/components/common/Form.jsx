@@ -12,7 +12,7 @@ class Form extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log("submitted");
+    this.doSubmit();
   };
 
   renderInput = (name, label, type = "text") => {
