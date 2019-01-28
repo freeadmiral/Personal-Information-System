@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const CompanySchema = mongoose.Schema({
-    name: {
+    companyName: {
         type: String,
     }
 });

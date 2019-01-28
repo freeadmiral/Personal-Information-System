@@ -3,14 +3,14 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 
-const User = require("../models/Users");
+const Users = require("../models/Users");
 
-router.get('/users', (req, res) => {
-    res.send("user");
+router.get('/api/users', (req, res) => {
+    res.send("users");
 });
 
-router.post('/users', function (req, res, next) {
-    const user = new User(req.body);
+router.post('/register', function (req, res, next) {
+    const user = new Users(req.body);
     const promise = user.save();
 
     promise.then((data) => {
@@ -20,5 +20,11 @@ router.post('/users', function (req, res, next) {
     });
 
 });
+
+
+
+
+
+
 
 module.exports = router;
