@@ -4,12 +4,15 @@ const app = express();
 const router = express.Router();
 const keys = require('./config/keys');
 const verifyToken = require('./middleware/verifyToken');
-
+const cors = require("cors");
 
 const userRouter = require('./routes/user');
 const companyRouter = require('./routes/company');
 const accountRouter = require('./routes/account');
 
+
+// Cors
+app.use(cors());
 
 //DB Config
 const db = keys.MongoURI;
@@ -36,7 +39,7 @@ app.use('/api', verifyToken);
 
 app.use('/', userRouter);
 app.use('/', companyRouter);
-app.use('/', accountRouter);
+app.use('/account', accountRouter);
 
 
 const port = 5000;

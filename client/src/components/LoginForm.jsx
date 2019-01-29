@@ -15,6 +15,7 @@ class LoginForm extends FormClass {
   doSubmit = async () => {
     const { account } = this.state;
     await login(account.username, account.password);
+    this.props.history.push("/dashboard");
   };
 
   render() {
