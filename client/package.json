@@ -6,6 +6,7 @@
     "@ant-design/icons-react": "^1.1.2",
     "antd": "^3.12.4",
     "axios": "^0.18.0",
+    "jwt-decode": "^2.2.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-router-dom": "^4.3.1",

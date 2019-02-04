@@ -6,13 +6,13 @@ const jwt = require('jsonwebtoken');
 
 router.post('/login', (req, res) => {
     const {
-        companyId,
+        // companyId,
         username,
         password
     } = req.body;
 
     Users.findOne({
-        companyId,
+        // companyId,
         username,
         password
     }, (err, user) => {
@@ -25,12 +25,11 @@ router.post('/login', (req, res) => {
             const payload = {
                 username
             };
-            const token = jwt.sign(payload, req.app.get('api_secret_key'), {
+            let token = jwt.sign(payload, req.app.get('api_secret_key'), {
                 expiresIn: 720
             });
-            res.json({
+            res.send({
                 token,
-                user
             })
         }
     });

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const keys = require("../config/keys");
 
 
 const Users = require("../models/Users");
@@ -21,10 +23,19 @@ router.post('/register', function (req, res, next) {
 
 });
 
-
-
-
-
-
+// router.get('/dashboard', (req, res, next) => {
+//     const decoded = jwt.verify(req.headers['authorization'], keys.api_secret_key);
+//     Users.findOne({
+//         _id: decoded._id
+//     }).then(user => {
+//         if (user) {
+//             res.json(user);
+//         } else {
+//             res.send("user not exist");
+//         }
+//     }).catch(err => {
+//         res.send(err);
+//     });
+// });
 
 module.exports = router;

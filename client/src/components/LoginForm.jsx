@@ -14,8 +14,13 @@ class LoginForm extends FormClass {
 
   doSubmit = async () => {
     const { account } = this.state;
-    await login(account.username, account.password);
-    this.props.history.push("/dashboard");
+    await login(account.username, account.password).then(res => {
+      if (res) {
+        this.props.history.push("/dashboard");
+      } else {
+        alert("user not found");
+      }
+    });
   };
 
   render() {
