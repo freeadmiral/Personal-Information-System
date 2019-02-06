@@ -5,22 +5,17 @@ import { Link } from "react-router-dom";
 import FormClass from "./common/Form";
 import { Avatar } from "antd";
 import logo from "../Header-Icon-User.png";
-import { login } from "../services/authServices";
+import { login } from "./../services/authServices";
 
 class LoginForm extends FormClass {
   state = {
     account: { company: "", username: "", password: "" }
   };
 
-  doSubmit = async () => {
+  doSubmit = async e => {
+    e.preventDefault();
     const { account } = this.state;
-    await login(account.username, account.password).then(res => {
-      if (res) {
-        this.props.history.push("/dashboard");
-      } else {
-        alert("user not found");
-      }
-    });
+    login(account.username, account.password);
   };
 
   render() {
@@ -35,7 +30,7 @@ class LoginForm extends FormClass {
           />
         </div>
         <Form
-          onSubmit={this.handleSubmit}
+          onSubmit={this.doSubmit}
           className="login-form"
           style={{ maxWidth: 300, margin: "auto" }}
         >

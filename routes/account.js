@@ -10,15 +10,16 @@ router.post('/login', (req, res) => {
         username,
         password
     } = req.body;
-
     Users.findOne({
         // companyId,
         username,
         password
     }, (err, user) => {
+
         if (err) throw err;
         if (!user) {
             res.json({
+                errorCode: 404,
                 message: "user not found"
             });
         } else {
