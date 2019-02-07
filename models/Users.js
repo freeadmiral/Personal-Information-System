@@ -60,7 +60,8 @@ UserSchema.methods.generateAuthToken = function () {
     const token = jwt.sign({
         _id: this._id,
         name: this.name,
-        username: this.username
+        username: this.username,
+        position: this.position
     }, keys.api_secret_key);
     return token;
 };
