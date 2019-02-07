@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { Form, Icon, Button, Checkbox } from "antd";
+import { Form, Icon, Button, Checkbox, Card } from "antd";
 import Input from "./common/Input";
 import { Link } from "react-router-dom";
 import FormClass from "./common/Form";
 import { Avatar } from "antd";
 import logo from "../Header-Icon-User.png";
 import { login } from "./../services/authServices";
-import { Card } from "antd";
 
 class LoginForm extends FormClass {
   state = {
@@ -15,9 +14,14 @@ class LoginForm extends FormClass {
   };
 
   doSubmit = async e => {
-    e.preventDefault();
     const { account } = this.state;
-    await login(account.username, account.password);
+    const { data: token } = await login(account.username, account.password);
+    if (token) {
+      localStorage.setItem("token", token);
+      this.props.history.push("/dashboard");
+    } else {
+      alert("user not found");
+    }
   };
 
   render() {
@@ -40,7 +44,7 @@ class LoginForm extends FormClass {
           }}
         >
           <Form
-            onSubmit={this.doSubmit}
+            onSubmit={this.handleSubmit}
             className="login-form"
             style={{
               maxWidth: 300,

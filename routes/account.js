@@ -1,40 +1,38 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Users = require('../models/Users');
-const jwt = require('jsonwebtoken');
+const Joi = require("joi");
 
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const {
-        // companyId,
         username,
         password
     } = req.body;
-    console.log(req.body)
-    Users.findOne({
-        // companyId,
+
+    const {
+        error
+    } = validate(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    let user = await Users.findOne({
         username,
         password
-    }, (err, user) => {
-
-        if (err) throw err;
-        if (!user) {
-            res.json({
-                errorCode: 404,
-                message: "user not found"
-            });
-        } else {
-            const payload = {
-                username
-            };
-            let token = jwt.sign(payload, req.app.get('api_secret_key'), {
-                expiresIn: 720
-            });
-            res.send({
-                token,
-            })
-        }
     });
+
+    if (!user) return res.status(400).send("invalid emial or password");
+
+    const token = user.generateAuthToken();
+    res.send(token);
 });
+
+function validate(req) {
+    const schema = {
+        username: Joi.string().min(3).required(),
+        password: Joi.string().min(6).max(15).required()
+    };
+    return Joi.validate(req, schema);
+}
 
 module.exports = router;
