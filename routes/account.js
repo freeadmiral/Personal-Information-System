@@ -10,6 +10,7 @@ router.post('/login', (req, res) => {
         username,
         password
     } = req.body;
+    console.log(req.body)
     Users.findOne({
         // companyId,
         username,
