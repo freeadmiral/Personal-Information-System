@@ -19,9 +19,9 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div>
-        <Row style={{ marginTop: "-5%" }}>
-          <Col span={6}>
+      <div style={{ margin: "10px" }}>
+        <Row>
+          <Col span={4} offset="1">
             <Card
               title={this.state.username}
               style={{ height: 350, width: 300 }}
@@ -29,10 +29,10 @@ class Dashboard extends Component {
               <p>{this.state.position}</p>
             </Card>
           </Col>
-          <Col span={12}>
-            <Card style={{ height: 320, marginLeft: "-3%" }} />
+          <Col span={12} offset="1">
+            <Card style={{ height: 320 }} />
           </Col>
-          <Col span={6} style={{ paddingLeft: "10px" }}>
+          <Col span={4} offset="1">
             <Calendar
               fullscreen={false}
               style={{
