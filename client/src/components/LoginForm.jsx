@@ -18,7 +18,7 @@ class LoginForm extends FormClass {
     const { data: token } = await login(account.username, account.password);
     if (token) {
       localStorage.setItem("token", token);
-      this.props.history.push("/dashboard");
+      this.props.history.push("/dash");
     } else {
       alert("user not found");
     }

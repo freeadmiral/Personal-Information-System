@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
-const keys = require("../config/keys");
-
-
+const verifyToken = require("../middleware/verifyToken");
 const Users = require("../models/Users");
+const mongoose = require("mongoose");
 
-router.get('/api/users', (req, res) => {
+
+
+router.get('/api/users', verifyToken, (req, res) => {
     res.send("users");
 });
 
@@ -23,19 +22,21 @@ router.post('/register', function (req, res, next) {
 
 });
 
-// router.get('/dashboard', (req, res, next) => {
-//     const decoded = jwt.verify(req.headers['authorization'], keys.api_secret_key);
-//     Users.findOne({
-//         _id: decoded._id
-//     }).then(user => {
-//         if (user) {
-//             res.json(user);
-//         } else {
-//             res.send("user not exist");
-//         }
-//     }).catch(err => {
-//         res.send(err);
-//     });
-// });
+router.get('/user', async (req, res, next) => {
+    const user = await Users.aggregate([{
+        $match: {
+            _id: mongoose.Types.ObjectId('5c5f2f40982fc21af437a71d')
+        },
+        $lookup: {
+            from: 'companies',
+            localField: 'companyId',
+            foreignField: '_id',
+            as: 'şirket'
+        }
+    }]);
+    // if (!user) return res.status(404).send("user not found");
+    res.json(user);
+});
+
 
 module.exports = router;

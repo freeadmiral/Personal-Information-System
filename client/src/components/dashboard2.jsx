@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Breadcrumb, Avatar } from "antd";
+import { Layout, Breadcrumb, Button } from "antd";
 import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
 
@@ -34,7 +34,7 @@ class dashboard2 extends Component {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Ant Design ©2018 Created by Ant UED
+            Personel Bilgi Sistemi ©2019 Created by Ant UED
           </Footer>
         </Layout>
       </Layout>

@@ -34,7 +34,7 @@ app.use(express.urlencoded({
 }));
 
 //Middleware
-app.use('/api', verifyToken);
+// app.use('/api', verifyToken);
 
 
 app.use('/', userRouter);
