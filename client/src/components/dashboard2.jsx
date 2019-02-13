@@ -6,6 +6,7 @@ import ProfileMenu from "./common/ProfileMenu";
 const { Header, Content, Footer } = Layout;
 
 class dashboard2 extends Component {
+
   render() {
     return (
       <Layout style={{ minHeight: "100vh" }}>
