@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Drawer, Avatar, Divider, Col, Row, Card } from "antd";
-import jwtDecode from 'jwt-decode';
-import { getUserDetails } from '../../services/getUserDetails';
+import jwtDecode from "jwt-decode";
+import { getUserDetails } from "../../services/getUserDetails";
 
 class ProfileMenu extends Component {
   state = { visible: false, name: "mark" };
@@ -9,7 +9,7 @@ class ProfileMenu extends Component {
   componentDidMount() {
     const token = localStorage.token;
     const decoded = jwtDecode(token);
-    const { data } = getUserDetails(decoded._id);
+    const data = getUserDetails(decoded.username);
     console.log(data);
   }
 

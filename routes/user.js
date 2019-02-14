@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const verifyToken = require("../middleware/verifyToken");
 const Users = require("../models/Users");
-const Company = require("../models/Company");
-const mongoose = require("mongoose");
 
 router.get("/api/users", verifyToken, (req, res) => {
   res.send("users");
@@ -22,10 +20,10 @@ router.post("/register", function (req, res, next) {
     });
 });
 
-router.get("/:user_id", async (req, res, next) => {
+router.get("/getUser", async (req, res, next) => {
   const user = await Users.aggregate([{
       $match: {
-        '_id': mongoose.Types.ObjectId(req.params.user_id)
+        'username': req.body.username
       }
     },
     {
@@ -37,7 +35,9 @@ router.get("/:user_id", async (req, res, next) => {
       }
     }
   ]);
-  // if (!user) return res.status(404).send("user not found");
+  if (!user) return res.status(404).json({
+    msg: "invalid username"
+  });
   res.json(user);
 });
 

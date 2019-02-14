@@ -3,11 +3,10 @@ import {
 } from "../config.json";
 import http from '../services/httpServices';
 
+const apiEndpoint = apiUrl + "/getUser";
 
-
-export function getUserDetails(user_id) {
-    const apiEndpoint = apiUrl + "/:user_id";
+export function getUserDetails(userId) {
     return http.get(apiEndpoint, {
-        user_id
-    });
+        userId
+    })
 }
