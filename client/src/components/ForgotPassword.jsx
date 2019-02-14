@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Form, Icon, Button, Card } from "antd";
 import Input from "./common/Input";
 import Forms from "./common/Form";

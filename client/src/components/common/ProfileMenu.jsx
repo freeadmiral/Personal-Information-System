@@ -4,13 +4,14 @@ import jwtDecode from "jwt-decode";
 import { getUserDetails } from "../../services/getUserDetails";
 
 class ProfileMenu extends Component {
-  state = { visible: false, name: "mark" };
+  state = { visible: false, name: "mark", data: {} };
 
   componentDidMount() {
     const token = localStorage.token;
     const decoded = jwtDecode(token);
-    const data = getUserDetails(decoded.username);
-    console.log(data);
+    fetch('http://localhost:5000/' + decoded.username).then(res => res.json()).then(json => {
+      this.setState({ data: json });
+    })
   }
 
   showDrawer = () => {
@@ -25,6 +26,7 @@ class ProfileMenu extends Component {
     });
   };
   render() {
+    const { data } = this.state;
     const pStyle = {
       fontSize: 16,
       color: "rgba(0,0,0,0.85)",
@@ -74,7 +76,7 @@ class ProfileMenu extends Component {
           <p style={pStyle}>Personal</p>
           <Row>
             <Col span={12}>
-              <DescriptionItem title="Full Name" content="Lily" />{" "}
+              <DescriptionItem title="Full Name" content={"Lily"} />{" "}
             </Col>
             <Col span={12}>
               <DescriptionItem

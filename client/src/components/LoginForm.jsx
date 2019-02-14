@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Form, Icon, Button, Checkbox, Card } from "antd";
 import Input from "./common/Input";
 import { Link } from "react-router-dom";
