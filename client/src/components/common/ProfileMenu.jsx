@@ -4,14 +4,14 @@ import jwtDecode from "jwt-decode";
 import { getUserDetails } from "../../services/getUserDetails";
 
 class ProfileMenu extends Component {
-  state = { visible: false, name: "mark", data: {} };
+  state = { visible: false, currentUser: [], isLoading: true, name: "" };
 
   componentDidMount() {
     const token = localStorage.token;
     const decoded = jwtDecode(token);
-    fetch('http://localhost:5000/' + decoded.username).then(res => res.json()).then(json => {
-      this.setState({ data: json });
-    })
+    getUserDetails(decoded.username).then(res =>
+      response.data.results.map((user = {}))
+    );
   }
 
   showDrawer = () => {

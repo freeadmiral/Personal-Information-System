@@ -20,7 +20,7 @@ router.post("/register", function (req, res, next) {
     });
 });
 
-router.get("/:username", async (req, res, next) => {
+router.get("/getUser/:username", async (req, res, next) => {
   const user = await Users.aggregate([{
       $match: {
         'username': req.params.username
