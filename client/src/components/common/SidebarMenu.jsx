@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Menu, Icon, Layout } from "antd";
+import { NavLink } from 'react-router-dom';
 
 class SidebarMenu extends Component {
   state = { collapsed: false };
 
   onCollapse = collapsed => {
-    console.log(collapsed);
     this.setState({ collapsed });
   };
 
@@ -29,8 +29,10 @@ class SidebarMenu extends Component {
         />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
           <Menu.Item key="1">
-            <Icon type="pie-chart" />
-            <span>Option 1</span>
+            <NavLink to="/dash">
+              <Icon type="home" />
+              <span>Ana Sayfa</span>
+            </NavLink>
           </Menu.Item>
           <Menu.Item key="2">
             <Icon type="desktop" />

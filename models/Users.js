@@ -5,6 +5,7 @@ const Joi = require("joi");
 
 const UserSchema = new mongoose.Schema({
   companyId: mongoose.Schema.Types.ObjectId,
+  supervisorId: mongoose.Schema.Types.ObjectId,
   name: {
     type: String,
     required: true,
@@ -75,12 +76,14 @@ const UserSchema = new mongoose.Schema({
   },
   socialMedia: {
     type: String
+  },
+  skills: {
+    type: String
   }
 });
 
-UserSchema.methods.generateAuthToken = function() {
-  const token = jwt.sign(
-    {
+UserSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({
       _id: this._id,
       name: this.name,
       username: this.username,

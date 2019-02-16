@@ -38,7 +38,7 @@ router.get("/getUser/:username", async (req, res, next) => {
   if (!user) return res.status(404).json({
     msg: "invalid username"
   });
-  res.json(user);
+  res.send(user);
 });
 
 module.exports = router;

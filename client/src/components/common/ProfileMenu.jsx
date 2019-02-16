@@ -4,14 +4,14 @@ import jwtDecode from "jwt-decode";
 import { getUserDetails } from "../../services/getUserDetails";
 
 class ProfileMenu extends Component {
-  state = { visible: false, currentUser: [], isLoading: true, name: "" };
+  state = { visible: false, currentUser: [], isLoading: true };
 
   componentDidMount() {
     const token = localStorage.token;
     const decoded = jwtDecode(token);
-    getUserDetails(decoded.username).then(res =>
-      response.data.results.map((user = {}))
-    );
+    getUserDetails(decoded.username).then(response => {
+      this.setState({ currentUser: response.data[0] });
+    })
   }
 
   showDrawer = () => {
@@ -26,7 +26,7 @@ class ProfileMenu extends Component {
     });
   };
   render() {
-    const { data } = this.state;
+    const { currentUser } = this.state;
     const pStyle = {
       fontSize: 16,
       color: "rgba(0,0,0,0.85)",
@@ -47,7 +47,7 @@ class ProfileMenu extends Component {
           style={{
             marginRight: 8,
             display: "inline-block",
-            color: "rgba(0,0,0,0.85)"
+            color: "#1890ff"
           }}
         >
           {title}:
@@ -61,7 +61,7 @@ class ProfileMenu extends Component {
         <a onClick={this.showDrawer}>
           <Avatar
             size={75}
-            src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+            src={currentUser.img}
           />
         </a>
 
@@ -72,89 +72,81 @@ class ProfileMenu extends Component {
           onClose={this.onClose}
           visible={this.state.visible}
         >
-          <p style={{ ...pStyle, marginBottom: 24 }}>User Profile</p>
-          <p style={pStyle}>Personal</p>
+          <h3 style={{ ...pStyle, marginBottom: 24 }}>Bilgilerim</h3>
+          <b style={pStyle}>Personel</b>
           <Row>
             <Col span={12}>
-              <DescriptionItem title="Full Name" content={"Lily"} />{" "}
+              <DescriptionItem title="Ad Soyad" content={currentUser.name + " " + currentUser.surname} />{" "}
             </Col>
             <Col span={12}>
               <DescriptionItem
                 title="Account"
-                content="AntDesign@example.com"
+                content={currentUser.email}
               />
             </Col>
           </Row>
           <Row>
             <Col span={12}>
-              <DescriptionItem title="City" content="HangZhou" />
+              <DescriptionItem title="İl" content={currentUser.city} />
             </Col>
             <Col span={12}>
-              <DescriptionItem title="Country" content="China🇨🇳" />
+              <DescriptionItem title="Ülke" content={currentUser.country} />
             </Col>
           </Row>
           <Row>
             <Col span={12}>
-              <DescriptionItem title="Birthday" content="February 2,1900" />
+              <DescriptionItem title="Doğum Yılı" content={currentUser.birthDate} />
             </Col>
             <Col span={12}>
-              <DescriptionItem title="Website" content="-" />
+              <DescriptionItem title="Web Sitesi" content={currentUser.website} />
+            </Col>
+          </Row>
+          <Divider />
+          <b style={pStyle}>Şirket</b>
+          <Row>
+            <Col span={12}>
+              <DescriptionItem title="Pozisyon" content={currentUser.position} />
+            </Col>
+            <Col span={12}>
+              <DescriptionItem title="Kabiliyetler" content={currentUser.responsibilites} />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <DescriptionItem title="Departman" content={currentUser.department} />
+            </Col>
+            <Col span={12}>
+              <DescriptionItem title="Supervisor" content={<a>{currentUser.supervisor}</a>} />
             </Col>
           </Row>
           <Row>
             <Col span={24}>
               <DescriptionItem
-                title="Message"
-                content="Make things as simple as possible but no simpler."
+                title="Yetenekler"
+                content={currentUser.skills}
               />
             </Col>
           </Row>
           <Divider />
-          <p style={pStyle}>Company</p>
+          <b style={pStyle}>İletişim</b>
           <Row>
             <Col span={12}>
-              <DescriptionItem title="Position" content="Programmer" />
-            </Col>
-            <Col span={12}>
-              <DescriptionItem title="Responsibilities" content="Coding" />
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <DescriptionItem title="Department" content="AFX" />
-            </Col>
-            <Col span={12}>
-              <DescriptionItem title="Supervisor" content={<a>Lin</a>} />
-            </Col>
-          </Row>
-          <Row>
-            <Col span={24}>
-              <DescriptionItem
-                title="Skills"
-                content="C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java, ASP, etc."
-              />
-            </Col>
-          </Row>
-          <Divider />
-          <p style={pStyle}>Contacts</p>
-          <Row>
-            <Col span={12}>
-              <DescriptionItem title="Email" content="AntDesign@example.com" />
+              <DescriptionItem title="E-Posta" content={currentUser.email} />
             </Col>
             <Col span={12}>
               <DescriptionItem
-                title="Phone Number"
-                content="+86 181 0000 0000"
+                title="Telefon Numarası"
+                content={currentUser.phoneNumber}
               />
             </Col>
           </Row>
           <Row>
             <Col span={24}>
               <DescriptionItem
-                title="Github"
+                title="Linkedın"
                 content={
-                  <a href="http://github.com/ant-design/ant-design/">
-                    github.com/ant-design/ant-design/
+                  <a href={currentUser.socialMedia}>
+                    Hesaba git
                   </a>
                 }
               />
