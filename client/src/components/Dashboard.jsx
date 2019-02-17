@@ -1,75 +1,44 @@
 import React, { Component } from "react";
-import jwtDecode from "jwt-decode";
-import { Row, Col, Card, Calendar } from "antd";
+import { Layout, Breadcrumb } from "antd";
+import SidebarMenu from "./common/SidebarMenu";
+import ProfileMenu from "./common/ProfileMenu";
+
+const { Header, Content, Footer } = Layout;
 
 class Dashboard extends Component {
-  state = {
-    username: "",
-    position: ""
-  };
-
-  componentDidMount() {
-    const token = localStorage.token;
-    const decoded = jwtDecode(token);
-    this.setState({
-      username: decoded.username,
-      position: decoded.position
-    });
-  }
 
   render() {
     return (
-      <div style={{ margin: "10px" }}>
-        <Row>
-          <Col span={4} offset="1">
-            <Card
-              title={this.state.username}
-              style={{ height: 350, width: 300 }}
-            >
-              <p>{this.state.position}</p>
-            </Card>
-          </Col>
-          <Col span={12} offset="1">
-            <Card style={{ height: 320 }} />
-          </Col>
-          <Col span={4} offset="1">
-            <Calendar
-              fullscreen={false}
-              style={{
-                width: 300,
-                border: "1px solid #d9d9d9",
-                borderRadius: 4,
-                background: "white"
-              }}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={8}>
-            <Card />
-          </Col>
-          <Col span={8}>
-            <Card />
-          </Col>
-          <Col span={8}>
-            <Card />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={6}>
-            <Card />
-          </Col>
-          <Col span={6}>
-            <Card />
-          </Col>
-          <Col span={6}>
-            <Card />
-          </Col>
-          <Col span={6}>
-            <Card />
-          </Col>
-        </Row>
-      </div>
+      <Layout style={{ minHeight: "100vh" }}>
+        <SidebarMenu />
+        <Layout>
+          <Header
+            style={{
+              background: "#fff",
+              padding: 0,
+              height: "90px",
+              boxShadow: "rgba(0, 0, 0, 0.5) 0px 1px 10px 0px"
+            }}
+          >
+            {" "}
+            <div style={{ float: "right", margin: "6px", marginRight: "5%" }}>
+              <ProfileMenu />
+            </div>
+          </Header>
+          <Content style={{ margin: "0 16px" }}>
+            <Breadcrumb style={{ margin: "16px 0" }}>
+              <Breadcrumb.Item>User</Breadcrumb.Item>
+              <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            </Breadcrumb>
+            <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
+              Bill is a cat.
+            </div>
+          </Content>
+          <Footer style={{ textAlign: "center" }}>
+            Personel Bilgi Sistemi ©2019 Created by Ant UED
+          </Footer>
+        </Layout>
+      </Layout>
     );
   }
 }
