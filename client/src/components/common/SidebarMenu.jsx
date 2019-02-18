@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Menu, Icon, Layout } from "antd";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 class SidebarMenu extends Component {
   state = { collapsed: false };
@@ -43,7 +43,9 @@ class SidebarMenu extends Component {
               </span>
             }
           >
-            <Menu.Item key="3"><NavLink to="/vacation"> İzin Talepleri</NavLink></Menu.Item>
+            <Menu.Item key="3">
+              <NavLink to="/vacation">İzin Talepleri</NavLink>
+            </Menu.Item>
             <Menu.Item key="4">Bill</Menu.Item>
             <Menu.Item key="5">Alex</Menu.Item>
           </SubMenu>

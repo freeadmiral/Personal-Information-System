@@ -3,12 +3,13 @@ const mongoose = require('mongoose');
 const app = express();
 const router = express.Router();
 const keys = require('./config/keys');
-const verifyToken = require('./middleware/verifyToken');
 const cors = require("cors");
 
 const userRouter = require('./routes/user');
 const companyRouter = require('./routes/company');
-const accountRouter = require('./routes/account');
+const accountRouter = require('./routes/account')
+const vacationRouter = require('./routes/vacation');
+
 
 
 // Cors
@@ -40,6 +41,7 @@ app.use(express.urlencoded({
 app.use('/', userRouter);
 app.use('/', companyRouter);
 app.use('/account', accountRouter);
+app.use('/', vacationRouter);
 
 
 const port = 5000;
