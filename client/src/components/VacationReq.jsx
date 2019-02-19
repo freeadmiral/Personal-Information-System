@@ -10,34 +10,26 @@ const { Header, Content, Footer } = Layout;
 
 class VacationReq extends Component {
   state = {
-    vacatiionData: {
-      key: "",
-      Ctarih: "",
-      Dtarih: "",
-      tur: "",
-      adres: "",
-      durum: ["Onaylandı"]
-    }
+    vacatiionData:
+      [{
+        _id: "",
+        leaveDate: "",
+        entryDate: "",
+        vacationType: "",
+        adress: "",
+      }]
   };
 
   componentDidMount() {
     const token = localStorage.token;
     const decoded = jwtDecode(token);
     getVacation(decoded._id).then(response => {
-      this.setState({
-        vacatiionData: response.data.map(data => ({
-          key: data._id,
-          Ctarih: data.leaveDate,
-          Dtarih: data.numberOfVacationDay,
-          tur: data.vacationType,
-          adres: data.adress
-        }))
-      });
+      this.setState({ vacatiionData: response.data[0] });
     });
   }
 
   render() {
-    console.log(this.state.vacatiionData.tur);
+    console.log(this.state.vacatiionData);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />

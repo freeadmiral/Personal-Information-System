@@ -13,13 +13,11 @@ class Tab extends Component {
         <Tabs defaultActiveKey="1" size="large">
           <TabPane tab="Günlük İzin Talepleri" key="1">
             <NewForm />
-            <TableonTab />
+            <TableonTab vacationData={this.props.vacation} />
           </TabPane>
           <TabPane tab="Saatlik İzin Talepleri" key="2">
             <HourlyForm />
-          </TabPane>
-          <TabPane tab="Tab 3" key="3">
-            Content of tab 3
+            <TableonTab />
           </TabPane>
         </Tabs>
       </div>

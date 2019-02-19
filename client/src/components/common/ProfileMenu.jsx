@@ -1,18 +1,8 @@
 import React, { Component } from "react";
-import { Drawer, Avatar, Divider, Col, Row, Card } from "antd";
-import jwtDecode from "jwt-decode";
-import { getUserDetails } from "../../services/getUserDetails";
+import { Drawer, Avatar, Divider, Col, Row, Button } from "antd";
 
 class ProfileMenu extends Component {
-  state = { visible: false, currentUser: [], isLoading: true };
-
-  componentDidMount() {
-    const token = localStorage.token;
-    const decoded = jwtDecode(token);
-    getUserDetails(decoded.username).then(response => {
-      this.setState({ currentUser: response.data[0] });
-    })
-  }
+  state = { visible: false, currentUser: {}, isLoading: true };
 
   showDrawer = () => {
     this.setState({
@@ -26,7 +16,7 @@ class ProfileMenu extends Component {
     });
   };
   render() {
-    const { currentUser } = this.state;
+    const { currentUser } = this.props;
     const pStyle = {
       fontSize: 16,
       color: "rgba(0,0,0,0.85)",
@@ -63,6 +53,9 @@ class ProfileMenu extends Component {
             size={75}
             src={currentUser.img}
           />
+          <Button size="small" style={{ marginLeft: 16, verticalAlign: 'middle' }} onClick={this.showDrawer}>
+            {currentUser.name + " " + currentUser.surname}
+          </Button>
         </a>
 
         <Drawer
