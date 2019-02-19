@@ -9,17 +9,35 @@ import { getVacation } from "./../services/getVacation";
 const { Header, Content, Footer } = Layout;
 
 class VacationReq extends Component {
-  state = { vacatiionData: {} };
+  state = {
+    vacatiionData: {
+      key: "",
+      Ctarih: "",
+      Dtarih: "",
+      tur: "",
+      adres: "",
+      durum: ["Onaylandı"]
+    }
+  };
 
   componentDidMount() {
     const token = localStorage.token;
     const decoded = jwtDecode(token);
     getVacation(decoded._id).then(response => {
-      this.setState({ vacatiionData: response.data[0] });
+      this.setState({
+        vacatiionData: response.data.map(data => ({
+          key: data._id,
+          Ctarih: data.leaveDate,
+          Dtarih: data.numberOfVacationDay,
+          tur: data.vacationType,
+          adres: data.adress
+        }))
+      });
     });
   }
 
   render() {
+    console.log(this.state.vacatiionData.tur);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />

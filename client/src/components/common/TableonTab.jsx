@@ -3,49 +3,43 @@ import { Table, Divider, Tag } from "antd";
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: "Çıkış Tarihi",
+    dataIndex: "Ctarih",
+    key: "Ctarih",
     render: text => <a href="javascript:;">{text}</a>
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    key: "age"
+    title: "Dönüş Tarihi",
+    dataIndex: "Dtarih",
+    key: "Dtarih"
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address"
+    title: "İzin Türü",
+    dataIndex: "tur",
+    key: "tur"
   },
   {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: tags => (
+    title: "Adres",
+    dataIndex: "adres",
+    key: "adres"
+  },
+  {
+    title: "Durum",
+    key: "durum",
+    dataIndex: "durum",
+    render: durum => (
       <span>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "loser") {
+        {durum.map(duru => {
+          let color = duru === "Onaylandı" ? "green" : "#91d5ff";
+          if (duru === "Reddedildi") {
             color = "volcano";
           }
           return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
+            <Tag color={color} key={duru}>
+              {duru.toUpperCase()}
             </Tag>
           );
         })}
-      </span>
-    )
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (text, record) => (
-      <span>
-        <a href="javascript:;">Invite {record.name}</a>
-        <Divider type="vertical" />
-        <a href="javascript:;">Delete</a>
       </span>
     )
   }
@@ -54,30 +48,31 @@ const columns = [
 const data = [
   {
     key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"]
+    Ctarih: "John Brown",
+    Dtarih: 32,
+    tur: "yıllık",
+    adres: "New York No. 1 Lake Park",
+    durum: ["Onaylandı"]
   },
   {
     key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"]
+    Ctarih: "Jim Green",
+    Dtarih: 42,
+    tur: "yıllık",
+    adres: "London No. 1 Lake Park",
+    durum: ["Reddedildi"]
   },
   {
     key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"]
+    Ctarih: "Joe Black",
+    Dtarih: 32,
+    tur: "yıllık",
+    adres: "Sidney No. 1 Lake Park",
+    durum: ["Beklemede"]
   }
 ];
 
 class TableonTab extends Component {
-  state = {};
-
   render() {
     return <Table columns={columns} dataSource={data} />;
   }
