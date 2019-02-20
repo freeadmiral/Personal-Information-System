@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 import { Drawer, Avatar, Divider, Col, Row, Button } from "antd";
+import { getUserDetails } from "../../services/getUserDetails";
+import { decodedToken } from "./../../services/decodeToken";
 
 class ProfileMenu extends Component {
   state = { visible: false, currentUser: {}, isLoading: true };
+
+  componentDidMount() {
+    const decoded = decodedToken();
+    getUserDetails(decoded.username).then(response => {
+      this.setState({ currentUser: response.data[0] });
+    });
+  }
 
   showDrawer = () => {
     this.setState({
@@ -16,7 +25,7 @@ class ProfileMenu extends Component {
     });
   };
   render() {
-    const { currentUser } = this.props;
+    const { currentUser } = this.state;
     const pStyle = {
       fontSize: 16,
       color: "rgba(0,0,0,0.85)",
@@ -49,11 +58,12 @@ class ProfileMenu extends Component {
     return (
       <div style={{ maxWidth: "300px" }}>
         <a onClick={this.showDrawer}>
-          <Avatar
-            size={75}
-            src={currentUser.img}
-          />
-          <Button size="small" style={{ marginLeft: 16, verticalAlign: 'middle' }} onClick={this.showDrawer}>
+          <Avatar size={75} src={currentUser.img} />
+          <Button
+            size="small"
+            style={{ marginLeft: 16, verticalAlign: "middle" }}
+            onClick={this.showDrawer}
+          >
             {currentUser.name + " " + currentUser.surname}
           </Button>
         </a>
@@ -69,13 +79,13 @@ class ProfileMenu extends Component {
           <b style={pStyle}>Personel</b>
           <Row>
             <Col span={12}>
-              <DescriptionItem title="Ad Soyad" content={currentUser.name + " " + currentUser.surname} />{" "}
+              <DescriptionItem
+                title="Ad Soyad"
+                content={currentUser.name + " " + currentUser.surname}
+              />{" "}
             </Col>
             <Col span={12}>
-              <DescriptionItem
-                title="Account"
-                content={currentUser.email}
-              />
+              <DescriptionItem title="Account" content={currentUser.email} />
             </Col>
           </Row>
           <Row>
@@ -88,28 +98,46 @@ class ProfileMenu extends Component {
           </Row>
           <Row>
             <Col span={12}>
-              <DescriptionItem title="Doğum Yılı" content={currentUser.birthDate} />
+              <DescriptionItem
+                title="Doğum Yılı"
+                content={currentUser.birthDate}
+              />
             </Col>
             <Col span={12}>
-              <DescriptionItem title="Web Sitesi" content={currentUser.website} />
+              <DescriptionItem
+                title="Web Sitesi"
+                content={currentUser.website}
+              />
             </Col>
           </Row>
           <Divider />
           <b style={pStyle}>Şirket</b>
           <Row>
             <Col span={12}>
-              <DescriptionItem title="Pozisyon" content={currentUser.position} />
+              <DescriptionItem
+                title="Pozisyon"
+                content={currentUser.position}
+              />
             </Col>
             <Col span={12}>
-              <DescriptionItem title="Kabiliyetler" content={currentUser.responsibilites} />
+              <DescriptionItem
+                title="Kabiliyetler"
+                content={currentUser.responsibilites}
+              />
             </Col>
           </Row>
           <Row>
             <Col span={12}>
-              <DescriptionItem title="Departman" content={currentUser.department} />
+              <DescriptionItem
+                title="Departman"
+                content={currentUser.department}
+              />
             </Col>
             <Col span={12}>
-              <DescriptionItem title="Supervisor" content={<a>{currentUser.supervisor}</a>} />
+              <DescriptionItem
+                title="Supervisor"
+                content={<a>{currentUser.supervisor}</a>}
+              />
             </Col>
           </Row>
           <Row>
@@ -137,11 +165,7 @@ class ProfileMenu extends Component {
             <Col span={24}>
               <DescriptionItem
                 title="Linkedın"
-                content={
-                  <a href={currentUser.socialMedia}>
-                    Hesaba git
-                  </a>
-                }
+                content={<a href={currentUser.socialMedia}>Hesaba git</a>}
               />
             </Col>
           </Row>

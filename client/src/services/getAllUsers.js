@@ -3,8 +3,8 @@ import {
 } from "../config.json";
 import http from '../services/httpServices';
 
-const apiEndpoint = apiUrl + "/getUsers";
+let apiEndpoint = apiUrl + "/getUsers";
 
-export function getAllUsers() {
+export function getbirthDates() {
     return http.get(apiEndpoint);
 }

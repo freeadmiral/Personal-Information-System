@@ -1,11 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const verifyToken = require("../middleware/verifyToken");
 const Users = require("../models/Users");
-
-router.get("/api/users", verifyToken, (req, res) => {
-  res.send("users");
-});
 
 router.post("/register", function (req, res, next) {
   const user = new Users(req.body);
@@ -34,6 +29,27 @@ router.get("/getUser/:username", async (req, res, next) => {
         as: "şirket"
       }
     }
+  ]);
+  if (!user) return res.status(404).json({
+    msg: "invalid username"
+  });
+  res.send(user);
+});
+
+router.get("/getUsers", async (req, res, next) => {
+  const user = await Users.aggregate([{
+      $project: {
+        birthDate: {
+          $dateToString: {
+            format: "%d-%m-%Y",
+            date: "$birthDate"
+          }
+        },
+        name: 1,
+        surname: 1
+      }
+    }
+
   ]);
   if (!user) return res.status(404).json({
     msg: "invalid username"

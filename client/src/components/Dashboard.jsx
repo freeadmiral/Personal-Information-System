@@ -3,30 +3,32 @@ import { Layout, Breadcrumb, Calendar, Row, Col, Card } from "antd";
 import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
 import HomeCalendar from "./common/HomeCalendar";
-import jwtDecode from "jwt-decode";
-import { getUserDetails } from "../services/getUserDetails";
-import { getAllUsers } from "../services/getAllUsers";
-
+import { getbirthDates } from "../services/getAllUsers";
+import moment from "moment";
 
 const { Header, Content, Footer } = Layout;
 
 class Dashboard extends Component {
-
-  state = { currentUser: {}, users: {} };
+  state = { currentUser: {}, birthDates: [{}], todayDate: "" };
 
   componentDidMount() {
-    const token = localStorage.token;
-    const decoded = jwtDecode(token);
-    getUserDetails(decoded.username).then(response => {
-      this.setState({ currentUser: response.data[0] });
-    })
-
-    getAllUsers().then(res => {
-      this.setState({ users: res.data[0] })
-    })
+    getbirthDates().then(response => {
+      this.setState({
+        birthDates: response.data
+      });
+    });
+    const today = new Date();
+    const date =
+      ("0" + today.getDate()).slice(-2) +
+      "-" +
+      ("0" + (today.getMonth() + 1)).slice(-2);
+    this.setState({ todayDate: date });
   }
 
   render() {
+    const { birthDates, todayDate } = this.state;
+    console.log(moment(birthDates[0].birthDate).format("DD-MM"));
+    console.log(todayDate);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />
@@ -51,16 +53,29 @@ class Dashboard extends Component {
             </Breadcrumb>
             <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
               <Row>
-                <div style={{ background: '#ECECEC', padding: '30px' }}>
+                <div style={{ background: "#ECECEC", padding: "30px" }}>
                   <Row gutter={16}>
                     <Col span={8}>
-                      <Card title="Takvim" bordered={false}><HomeCalendar /></Card>
+                      <Card title="Takvim" bordered={false}>
+                        <HomeCalendar />
+                      </Card>
                     </Col>
                     <Col span={8}>
-                      <Card title="Bugün Doğanlar" bordered={false}>Bugün Doğan Yok</Card>
+                      <Card title="Bugün Doğanlar" bordered={false}>
+                        {birthDates.map(data =>
+                          moment(data.birthDate).format("DD-MM") ===
+                          todayDate ? (
+                            <p key={data._id}>
+                              {data.name + " " + data.surname}
+                            </p>
+                          ) : null
+                        )}
+                      </Card>
                     </Col>
                     <Col span={8}>
-                      <Card title="Card title" bordered={false}>Card content</Card>
+                      <Card title="Card title" bordered={false}>
+                        Card content
+                      </Card>
                     </Col>
                   </Row>
                 </div>
