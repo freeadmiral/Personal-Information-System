@@ -7,7 +7,19 @@ const { Option } = Select;
 
 
 class NewForm extends Component {
-    state = { visible: false }
+    state = { visible: false, newVacation: { userId: "", vacationType: "", leaveDate: "", enrtyDate: "", day: "", reason: "", adress: "" } }
+
+    handleChange = (e) => {
+        const newVacation = { ...this.state.newVacation };
+        newVacation[e.currentTarget.name] = e.currentTarget.value;
+        this.setState({ newVacation });
+    };
+
+    handleSelect = (e) => {
+        let newVacation = { ...this.state.newVacation };
+        newVacation.vacationType = e.target.value;
+        this.setState({ newVacation });
+    }
 
     showDrawer = () => {
         this.setState({
@@ -43,6 +55,7 @@ class NewForm extends Component {
                         <Col span={12}>
                             <Form.Item label="Tarih">
                                 <DatePicker.RangePicker
+                                    onChange={this.handleChange}
                                     style={{ width: '100%' }}
                                     getPopupContainer={trigger => trigger.parentNode}
                                 />
@@ -50,7 +63,7 @@ class NewForm extends Component {
                         </Col>
                         <Col span={12}>
                             <Form.Item label="İzin Tipi">
-                                <Select placeholder="izin tipini seçiniz">
+                                <Select onChange={this.handleSelect} value={this.state.newVacation.vacationType} placeholder="izin tipini seçiniz">
                                     <Option value="Doğum">Doğum izni</Option>
                                     <Option value="Evlilik">Evlilik izni</Option>
                                     <Option value="Sağlık">Sağlık izni(Raporlu)</Option>
@@ -64,21 +77,21 @@ class NewForm extends Component {
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item label="Gün">
-                                <Input placeholder="Gün sayısı" />
+                                <Input onChange={this.handleChange} name="day" placeholder="Gün sayısı" />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col span={24}>
                             <Form.Item label="İzne çıkış nedeni">
-                                <Input.TextArea rows={4} placeholder="Açıklama giriniz..." />
+                                <Input.TextArea onChange={this.handleChange} name="reason" rows={4} placeholder="Açıklama giriniz..." />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col span={24}>
                             <Form.Item label="İzinde bulunacağı adres">
-                                <Input.TextArea rows={4} placeholder="Adres giriniz..." />
+                                <Input.TextArea onChange={this.handleChange} name="adress" rows={4} placeholder="Adres giriniz..." />
                             </Form.Item>
                         </Col>
                     </Row>
