@@ -24,6 +24,9 @@ const VacationSchema = new mongoose.Schema({
     },
     adress: {
         type: String,
+    },
+    status: {
+        type: String
     }
 });
 

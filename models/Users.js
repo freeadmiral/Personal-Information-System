@@ -79,6 +79,13 @@ const UserSchema = new mongoose.Schema({
   },
   skills: {
     type: String
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
+  isLeaved: {
+    type: Boolean
   }
 });
 

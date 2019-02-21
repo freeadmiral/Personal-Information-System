@@ -21,14 +21,16 @@ class Dashboard extends Component {
     const date =
       ("0" + today.getDate()).slice(-2) +
       "-" +
-      ("0" + (today.getMonth() + 1)).slice(-2);
+      ("0" + (today.getMonth() + 1)).slice(-2) +
+      "-" +
+      today.getFullYear();
     this.setState({ todayDate: date });
   }
 
   render() {
     const { birthDates, todayDate } = this.state;
-    console.log(moment(birthDates[0].birthDate).format("DD-MM"));
-    console.log(todayDate);
+    console.log("bugun", todayDate);
+    console.log(birthDates[0].birthDate);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />
@@ -63,8 +65,7 @@ class Dashboard extends Component {
                     <Col span={8}>
                       <Card title="Bugün Doğanlar" bordered={false}>
                         {birthDates.map(data =>
-                          moment(data.birthDate).format("DD-MM") ===
-                          todayDate ? (
+                          data.birthDate === todayDate ? (
                             <p key={data._id}>
                               {data.name + " " + data.surname}
                             </p>
@@ -73,7 +74,7 @@ class Dashboard extends Component {
                       </Card>
                     </Col>
                     <Col span={8}>
-                      <Card title="Card title" bordered={false}>
+                      <Card title="Bugün İzinliler" bordered={false}>
                         Card content
                       </Card>
                     </Col>
