@@ -4,29 +4,33 @@ const VacationSchema = new mongoose.Schema({
     userId: mongoose.Schema.Types.ObjectId,
     vacationType: {
         type: String,
-        required: true
-    },
-    leaveDate: {
-        type: Date,
-        required: true
     },
     entryDate: {
         type: Date,
-        required: true
+    },
+    leaveDate: {
+        type: Date,
     },
     numberOfVacationDay: {
         type: Number,
     },
     reason: {
         type: String,
-        maxlength: 1000,
-        minlength: 10
     },
-    adress: {
+    address: {
         type: String,
     },
     status: {
         type: String
+    },
+    startTime: {
+        type: String
+    },
+    endTime: {
+        type: String
+    },
+    date: {
+        type: Date
     }
 });
 

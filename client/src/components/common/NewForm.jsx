@@ -10,7 +10,9 @@ import {
   DatePicker,
   Icon
 } from "antd";
+import { newDailyVacation } from "../../services/getVacation";
 
+const dateFormat = 'MM/DD/YYYY';
 const { Option } = Select;
 
 class NewForm extends Component {
@@ -20,26 +22,23 @@ class NewForm extends Component {
       visible: false
     };
   }
-
-  componentDidMount() {
-    this.props.form.setFieldsValue({ type: this.state.vacationType });
-  }
-
   showDrawer = () => {
     this.setState({
       visible: true
     });
   };
 
-  onClose = () => {
+  hideDrawer = () => {
+    this.setState({
+      visible: false
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      this.setState({
-        visible: false
-      });
-      console.log(values);
+      if (!err)
+        return newDailyVacation(values);
     });
   };
 
@@ -61,7 +60,7 @@ class NewForm extends Component {
             paddingBottom: "108px"
           }}
         >
-          <Form layout="vertical" hideRequiredMark>
+          <Form layout="vertical">
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item label="Tarih">
@@ -69,6 +68,7 @@ class NewForm extends Component {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
                     <DatePicker.RangePicker
+                      format={dateFormat}
                       style={{ width: "100%" }}
                       getPopupContainer={trigger => trigger.parentNode}
                     />
@@ -77,7 +77,7 @@ class NewForm extends Component {
               </Col>
               <Col span={12}>
                 <Form.Item label="İzin Tipi">
-                  {getFieldDecorator("type", {
+                  {getFieldDecorator("vacationType", {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
                     <Select placeholder="izin tipini seçiniz">
@@ -93,20 +93,12 @@ class NewForm extends Component {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item label="Gün">
-                  <Input name="day" placeholder="Gün sayısı" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
               <Col span={24}>
                 <Form.Item label="İzne çıkış nedeni">
                   {getFieldDecorator("reason", {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
                     <Input.TextArea
-                      name="reason"
                       rows={4}
                       placeholder="Açıklama giriniz..."
                     />
@@ -121,7 +113,6 @@ class NewForm extends Component {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
                     <Input.TextArea
-                      name="adress"
                       rows={4}
                       placeholder="Adres giriniz..."
                     />
@@ -142,10 +133,10 @@ class NewForm extends Component {
               textAlign: "center"
             }}
           >
-            <Button onClick={this.onClose} style={{ marginRight: 8 }}>
+            <Button onClick={this.hideDrawer} style={{ marginRight: 8 }}>
               Vazgeç
             </Button>
-            <Button onClick={this.onClose} type="primary">
+            <Button onClick={this.handleSubmit} type="primary">
               Gönder
             </Button>
           </div>

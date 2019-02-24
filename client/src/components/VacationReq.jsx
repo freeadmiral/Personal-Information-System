@@ -29,7 +29,6 @@ class VacationReq extends Component {
   }
 
   render() {
-    console.log(this.state.vacatiionData);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />

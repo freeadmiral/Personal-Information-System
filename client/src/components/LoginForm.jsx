@@ -100,4 +100,4 @@ class LoginForm extends FormClass {
   }
 }
 
-export default LoginForm;
+export default Form.create()(LoginForm);

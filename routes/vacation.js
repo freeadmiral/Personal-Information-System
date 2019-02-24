@@ -49,5 +49,37 @@ router.get("/getVacation/:userId", async (req, res, next) => {
     res.send(vacation);
 });
 
+router.post('/vacationReq', async (req, res, next) => {
+    const {
+        userId,
+        vacationType,
+        entryDate,
+        leaveDate,
+        address,
+        reason,
+        date,
+        startTime,
+        endTime
+    } = req.body;
+    console.log(req.body);
+    const vacation = new Vacation({
+        userId,
+        vacationType,
+        entryDate,
+        leaveDate,
+        reason,
+        address,
+        date,
+        startTime,
+        endTime
+    });
+    const promise = vacation.save();
+    promise.then((data) => {
+        res.json(data);
+    }).catch((err) => {
+        res.json(err);
+    });
+});
+
 
 module.exports = router;

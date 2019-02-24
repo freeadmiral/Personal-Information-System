@@ -11,14 +11,21 @@ import {
   Icon,
   TimePicker
 } from "antd";
-import moment from "moment";
+import { newHourlyVaction } from '../../services/getVacation';
+import moment from 'moment';
+moment.locale();
 
 const { Option } = Select;
 const format = "HH:mm";
+const dateFormat = 'MM-DD-YYYY';
 
 class NewForm extends Component {
-  state = { visible: false };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false
+    };
+  }
   showDrawer = () => {
     this.setState({
       visible: true
@@ -31,6 +38,15 @@ class NewForm extends Component {
     });
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err)
+        console.log(values.date._d);
+      return newHourlyVaction(values);
+    });
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
 
@@ -40,7 +56,7 @@ class NewForm extends Component {
           <Icon type="plus" /> Yeni Kayıt
         </Button>
         <Drawer
-          title="Yeni İzin Talebi Oluştur"
+          title="Saatlik İzin Talebi Oluştur"
           width={720}
           onClose={this.onClose}
           visible={this.state.visible}
@@ -50,14 +66,15 @@ class NewForm extends Component {
             paddingBottom: "108px"
           }}
         >
-          <Form layout="vertical" hideRequiredMark>
+          <Form layout="vertical">
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item label="Tarih">
-                  {getFieldDecorator("Tarih", {
+                  {getFieldDecorator("date", {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
                     <DatePicker
+                      format={dateFormat}
                       style={{ width: "100%" }}
                       getPopupContainer={trigger => trigger.parentNode}
                     />
@@ -66,12 +83,12 @@ class NewForm extends Component {
               </Col>
               <Col span={12}>
                 <Form.Item label="İzin Tipi">
-                  {getFieldDecorator("İzin Tipi", {
+                  {getFieldDecorator("vacationType", {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
                     <Select placeholder="izin tipini seçiniz">
-                      <Option value="Doğum">Saatlik İzin</Option>
-                      <Option value="Evlilik">Ücretsiz İzin</Option>
+                      <Option value="Saatlik">Saatlik İzin</Option>
+                      <Option value="Ücretsiz">Ücretsiz İzin</Option>
                     </Select>
                   )}
                 </Form.Item>
@@ -80,11 +97,10 @@ class NewForm extends Component {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item label="Başlangıç Saati">
-                  {getFieldDecorator("Başlangıç Saati", {
+                  {getFieldDecorator("startTime", {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
                     <TimePicker
-                      defaultValue={moment("08:00", format)}
                       format={format}
                     />
                   )}
@@ -92,11 +108,10 @@ class NewForm extends Component {
               </Col>
               <Col span={12}>
                 <Form.Item label="Bitiş Saati">
-                  {getFieldDecorator("Bitiş Saati", {
+                  {getFieldDecorator("endTime", {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
                     <TimePicker
-                      defaultValue={moment("08:00", format)}
                       format={format}
                     />
                   )}
@@ -144,7 +159,7 @@ class NewForm extends Component {
             <Button onClick={this.onClose} style={{ marginRight: 8 }}>
               Vazgeç
             </Button>
-            <Button onClick={this.onClose} type="primary">
+            <Button onClick={this.handleSubmit} htmlType="submit" type="primary">
               Gönder
             </Button>
           </div>

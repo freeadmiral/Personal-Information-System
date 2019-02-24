@@ -10,7 +10,7 @@ router.post('/login', async (req, res) => {
         username,
         password
     } = req.body;
-
+    console.log(req.body);
     const {
         error
     } = validate(req.body);
