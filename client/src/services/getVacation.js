@@ -19,14 +19,20 @@ export function getVacation(userId) {
     return http.get(apiEndpoint + "/" + userId);
 }
 
+export function getHourlyVacation(userId) {
+    const apiEndpoint3 = apiUrl + "/getHourlyVacation";
+    return http.get(apiEndpoint3 + "/" + userId);
+}
+
 const apiEndpoint2 = apiUrl + "/vacationReq";
 
 
-export function newDailyVacation(values) {
+export function newDailyVacation(values, userId) {
     axios({
         method: 'post',
         url: apiEndpoint2,
         data: paramsSerializer({
+            userId: userId,
             vacationType: values.vacationType,
             reason: values.reason,
             address: values.address,
@@ -36,12 +42,13 @@ export function newDailyVacation(values) {
     });
 }
 
-export function newHourlyVaction(values) {
+export function newHourlyVaction(values, userId) {
     console.log("servis ", values);
     axios({
         method: 'post',
         url: apiEndpoint2,
         data: paramsSerializer({
+            userId: userId,
             vacationType: values.vacationType,
             reason: values.reason,
             address: values.address,

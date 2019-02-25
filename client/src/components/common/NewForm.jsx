@@ -11,15 +11,17 @@ import {
   Icon
 } from "antd";
 import { newDailyVacation } from "../../services/getVacation";
+import { decodedToken } from "./../../services/decodeToken";
 
-const dateFormat = 'MM/DD/YYYY';
+const dateFormat = "MM/DD/YYYY";
 const { Option } = Select;
 
 class NewForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false
+      visible: false,
+      userId: ""
     };
   }
   showDrawer = () => {
@@ -33,12 +35,15 @@ class NewForm extends Component {
       visible: false
     });
   };
+  componentDidMount() {
+    const userId = decodedToken();
+    this.setState({ userId: userId._id });
+  }
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err)
-        return newDailyVacation(values);
+      if (!err) return newDailyVacation(values, this.state.userId);
     });
   };
 
@@ -81,12 +86,14 @@ class NewForm extends Component {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
                     <Select placeholder="izin tipini seçiniz">
-                      <Option value="Doğum">Doğum izni</Option>
-                      <Option value="Evlilik">Evlilik izni</Option>
-                      <Option value="Sağlık">Sağlık izni(Raporlu)</Option>
-                      <Option value="İdari">İdari izin</Option>
-                      <Option value="Ücretsiz">Ücretsiz izin</Option>
-                      <Option value="Yıllık">Yıllık izin</Option>
+                      <Option value="Doğum İzni">Doğum izni</Option>
+                      <Option value="Evlilik İzni">Evlilik izni</Option>
+                      <Option value="Sağlık İzni(Raporlu)">
+                        Sağlık izni(Raporlu)
+                      </Option>
+                      <Option value="İdari İzin">İdari izin</Option>
+                      <Option value="Ücretsiz İzin">Ücretsiz izin</Option>
+                      <Option value="Yıllık İzin">Yıllık izin</Option>
                     </Select>
                   )}
                 </Form.Item>
@@ -112,10 +119,7 @@ class NewForm extends Component {
                   {getFieldDecorator("address", {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
-                    <Input.TextArea
-                      rows={4}
-                      placeholder="Adres giriniz..."
-                    />
+                    <Input.TextArea rows={4} placeholder="Adres giriniz..." />
                   )}
                 </Form.Item>
               </Col>

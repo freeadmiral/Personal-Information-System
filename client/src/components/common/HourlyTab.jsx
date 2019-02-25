@@ -4,13 +4,13 @@ import { Table, Tag } from "antd";
 const columns = [
   {
     title: "Çıkış Tarihi",
-    dataIndex: "leaveDate",
-    _id: "leaveDate"
+    dataIndex: "startTime",
+    _id: "startTime"
   },
   {
     title: "Dönüş Tarihi",
-    dataIndex: "entryDate",
-    _id: "entryDate"
+    dataIndex: "endTime",
+    _id: "endTime"
   },
   {
     title: "İzin Türü",
@@ -49,14 +49,13 @@ const columns = [
   }
 ];
 
-class TableonTab extends Component {
+class HourlyTab extends Component {
   render() {
-    const { vacationData } = this.props;
-    console.log("tableonTab ", vacationData);
-    return (
-      <Table rowKey="_id" columns={columns} dataSource={vacationData.data} />
-    );
+    const { hourly } = this.props;
+    console.log("hourly ", hourly);
+
+    return <Table rowKey="_id" columns={columns} dataSource={hourly.data} />;
   }
 }
 
-export default TableonTab;
+export default HourlyTab;

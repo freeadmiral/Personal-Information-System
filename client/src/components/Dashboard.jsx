@@ -4,7 +4,6 @@ import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
 import HomeCalendar from "./common/HomeCalendar";
 import { getbirthDates } from "../services/getAllUsers";
-import moment from "moment";
 
 const { Header, Content, Footer } = Layout;
 
@@ -29,8 +28,6 @@ class Dashboard extends Component {
 
   render() {
     const { birthDates, todayDate } = this.state;
-    console.log("bugun", todayDate);
-    console.log(birthDates[0].birthDate);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />

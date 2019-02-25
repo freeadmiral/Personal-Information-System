@@ -21,7 +21,8 @@ const VacationSchema = new mongoose.Schema({
         type: String,
     },
     status: {
-        type: String
+        type: Array,
+        default: ["beklemede"]
     },
     startTime: {
         type: String

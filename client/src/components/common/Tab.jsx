@@ -3,6 +3,7 @@ import { Tabs } from "antd";
 import NewForm from "./NewForm";
 import HourlyForm from "./HourlyForm";
 import TableonTab from "./TableonTab";
+import HourlyTab from "./HourlyTab";
 
 const { TabPane } = Tabs;
 
@@ -17,7 +18,7 @@ class Tab extends Component {
           </TabPane>
           <TabPane tab="Saatlik İzin Talepleri" key="2">
             <HourlyForm />
-            <TableonTab />
+            <HourlyTab hourly={this.props.hourlyVacation} />
           </TabPane>
         </Tabs>
       </div>

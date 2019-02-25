@@ -11,19 +11,21 @@ import {
   Icon,
   TimePicker
 } from "antd";
-import { newHourlyVaction } from '../../services/getVacation';
-import moment from 'moment';
+import { newHourlyVaction } from "../../services/getVacation";
+import moment from "moment";
+import { decodedToken } from "./../../services/decodeToken";
 moment.locale();
 
 const { Option } = Select;
 const format = "HH:mm";
-const dateFormat = 'MM-DD-YYYY';
+const dateFormat = "MM-DD-YYYY";
 
 class NewForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false
+      visible: false,
+      userId: ""
     };
   }
   showDrawer = () => {
@@ -38,14 +40,17 @@ class NewForm extends Component {
     });
   };
 
-  handleSubmit = (e) => {
+  componentDidMount() {
+    const userId = decodedToken();
+    this.setState({ userId: userId._id });
+  }
+
+  handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err)
-        console.log(values.date._d);
-      return newHourlyVaction(values);
+      if (!err) return newHourlyVaction(values, this.state.userId);
     });
-  }
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -87,8 +92,8 @@ class NewForm extends Component {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
                   })(
                     <Select placeholder="izin tipini seçiniz">
-                      <Option value="Saatlik">Saatlik İzin</Option>
-                      <Option value="Ücretsiz">Ücretsiz İzin</Option>
+                      <Option value="Saatlik İzin">Saatlik İzin</Option>
+                      <Option value="Ücretsiz İzin">Ücretsiz İzin</Option>
                     </Select>
                   )}
                 </Form.Item>
@@ -99,22 +104,14 @@ class NewForm extends Component {
                 <Form.Item label="Başlangıç Saati">
                   {getFieldDecorator("startTime", {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
-                  })(
-                    <TimePicker
-                      format={format}
-                    />
-                  )}
+                  })(<TimePicker format={format} />)}
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item label="Bitiş Saati">
                   {getFieldDecorator("endTime", {
                     rules: [{ required: true, message: "Bu alan zorunludur" }]
-                  })(
-                    <TimePicker
-                      format={format}
-                    />
-                  )}
+                  })(<TimePicker format={format} />)}
                 </Form.Item>
               </Col>
             </Row>
@@ -159,7 +156,11 @@ class NewForm extends Component {
             <Button onClick={this.onClose} style={{ marginRight: 8 }}>
               Vazgeç
             </Button>
-            <Button onClick={this.handleSubmit} htmlType="submit" type="primary">
+            <Button
+              onClick={this.handleSubmit}
+              htmlType="submit"
+              type="primary"
+            >
               Gönder
             </Button>
           </div>

@@ -4,31 +4,30 @@ import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
 import Tab from "./common/Tab";
 import jwtDecode from "jwt-decode";
-import { getVacation } from "./../services/getVacation";
+import { getVacation, getHourlyVacation } from "./../services/getVacation";
 
 const { Header, Content, Footer } = Layout;
 
 class VacationReq extends Component {
   state = {
-    vacatiionData:
-      [{
-        _id: "",
-        leaveDate: "",
-        entryDate: "",
-        vacationType: "",
-        adress: "",
-      }]
+    DailyVacationData: [],
+    HourlyVacationData: []
   };
 
   componentDidMount() {
     const token = localStorage.token;
     const decoded = jwtDecode(token);
     getVacation(decoded._id).then(response => {
-      this.setState({ vacatiionData: response.data[0] });
+      this.setState({ DailyVacationData: response });
+    });
+    getHourlyVacation(decoded._id).then(response => {
+      this.setState({ HourlyVacationData: response });
     });
   }
 
   render() {
+    console.log("sdsa", this.state.DailyVacationData);
+
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />
@@ -52,7 +51,10 @@ class VacationReq extends Component {
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb>
             <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
-              <Tab vacation={this.state.vacatiionData} />
+              <Tab
+                hourlyVacation={this.state.HourlyVacationData}
+                vacation={this.state.DailyVacationData}
+              />
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>

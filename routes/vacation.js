@@ -32,14 +32,65 @@ router.get("/getVacation/:userId", async (req, res, next) => {
             $unwind: "$user"
         }, {
             $project: {
-                userId: 1,
                 vacationType: 1,
-                leaveDate: 1,
-                entryDate: 1,
-                numberOfVacationDay: 1,
+                leaveDate: {
+                    $dateToString: {
+                        format: "%Y-%m-%d",
+                        date: "$leaveDate"
+                    }
+                },
+                entryDate: {
+                    $dateToString: {
+                        format: "%Y-%m-%d",
+                        date: "$entryDate"
+                    }
+                },
                 reason: 1,
-                adress: 1,
+                address: 1,
+                durum: 1,
+                status: 1,
                 user: '$user.username'
+            }
+        }
+    ]);
+    if (!vacation) return res.status(404).json({
+        msg: "invalid username"
+    });
+    res.send(vacation);
+});
+
+router.get("/getHourlyVacation/:userId", async (req, res, next) => {
+    const vacation = await Vacation.aggregate([{
+            $match: {
+                'userId': mongoose.Types.ObjectId(req.params.userId)
+            }
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "_id",
+                as: "user"
+            }
+        }, {
+            $unwind: "$user"
+        }, {
+            $project: {
+                vacationType: 1,
+                date: {
+                    $dateToString: {
+                        format: "%Y-%m-%d",
+                        date: "$date"
+                    }
+                },
+                startTime: 1,
+                endTime: 1,
+                reason: 1,
+                address: 1,
+                durum: 1,
+                status: 1,
+                user: '$user.username'
+
             }
         }
     ]);
