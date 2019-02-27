@@ -3,12 +3,12 @@ import { Table, Tag } from "antd";
 
 const columns = [
   {
-    title: "Çıkış Tarihi",
+    title: "Çıkış Saati",
     dataIndex: "startTime",
     _id: "startTime"
   },
   {
-    title: "Dönüş Tarihi",
+    title: "Dönüş Saati",
     dataIndex: "endTime",
     _id: "endTime"
   },

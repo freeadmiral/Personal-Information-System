@@ -35,7 +35,7 @@ const columns = [
       <span>
         {status.map(duru => {
           let color = duru === "onaylandı" ? "green" : "#91d5ff";
-          if (duru === "Reddedildi") {
+          if (duru === "REDDEDILDI") {
             color = "volcano";
           }
           return (

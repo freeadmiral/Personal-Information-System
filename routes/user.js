@@ -36,25 +36,16 @@ router.get("/getUser/:username", async (req, res, next) => {
   res.send(user);
 });
 
-router.get("/getUsers", async (req, res, next) => {
-  const user = await Users.aggregate([{
-      $project: {
-        birthDate: {
-          $dateToString: {
-            format: "%d-%m-%Y",
-            date: "$birthDate"
-          }
-        },
-        name: 1,
-        surname: 1
-      }
-    }
-
-  ]);
-  if (!user) return res.status(404).json({
+router.get("/getUsers/birthDate", async (req, res, next) => {
+  const day = (new Date()).getDate();
+  const month = (new Date()).getMonth();
+  const users = await Users.find({
+    $where: `return this.birthDate.getDate() === ${day} && this.birthDate.getMonth() === ${month}`
+  }).exec();
+  if (!users) return res.status(404).json({
     msg: "invalid username"
   });
-  res.send(user);
+  res.send(users);
 });
 
 module.exports = router;

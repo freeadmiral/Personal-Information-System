@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Breadcrumb, Calendar, Row, Col, Card } from "antd";
+import { Layout, Breadcrumb, Row, Col, Card, Alert, Avatar } from "antd";
 import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
 import HomeCalendar from "./common/HomeCalendar";
@@ -8,7 +8,7 @@ import { getbirthDates } from "../services/getAllUsers";
 const { Header, Content, Footer } = Layout;
 
 class Dashboard extends Component {
-  state = { currentUser: {}, birthDates: [{}], todayDate: "" };
+  state = { currentUser: {}, birthDates: [{}] };
 
   componentDidMount() {
     getbirthDates().then(response => {
@@ -16,18 +16,11 @@ class Dashboard extends Component {
         birthDates: response.data
       });
     });
-    const today = new Date();
-    const date =
-      ("0" + today.getDate()).slice(-2) +
-      "-" +
-      ("0" + (today.getMonth() + 1)).slice(-2) +
-      "-" +
-      today.getFullYear();
-    this.setState({ todayDate: date });
   }
 
   render() {
-    const { birthDates, todayDate } = this.state;
+    const { birthDates } = this.state;
+    console.log("asd", birthDates);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />
@@ -50,35 +43,33 @@ class Dashboard extends Component {
               <Breadcrumb.Item>User</Breadcrumb.Item>
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb>
-            <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
-              <Row>
-                <div style={{ background: "#ECECEC", padding: "30px" }}>
-                  <Row gutter={16}>
-                    <Col span={8}>
-                      <Card title="Takvim" bordered={false}>
-                        <HomeCalendar />
-                      </Card>
-                    </Col>
-                    <Col span={8}>
-                      <Card title="Bugün Doğanlar" bordered={false}>
-                        {birthDates.map(data =>
-                          data.birthDate === todayDate ? (
-                            <p key={data._id}>
-                              {data.name + " " + data.surname}
-                            </p>
-                          ) : null
-                        )}
-                      </Card>
-                    </Col>
-                    <Col span={8}>
-                      <Card title="Bugün İzinliler" bordered={false}>
-                        Card content
-                      </Card>
-                    </Col>
-                  </Row>
-                </div>
+            <Row>
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Card title="Takvim" bordered={false}>
+                    <HomeCalendar />
+                  </Card>
+                </Col>
+                <Col span={8}>
+                  <Card title="Bugün Doğanlar" bordered={false}>
+                    {birthDates.map(data => (
+                      <Alert
+                        style={{ marginLeft: "50px" }}
+                        message={data.name + " " + data.surname}
+                        description={data.position}
+                        type="success"
+                        showIcon
+                      />
+                    ))}
+                  </Card>
+                </Col>
+                <Col span={8}>
+                  <Card title="Bugün İzinliler" bordered={false}>
+                    Card content
+                  </Card>
+                </Col>
               </Row>
-            </div>
+            </Row>
           </Content>
           <Footer style={{ textAlign: "center" }}>
             Personel Bilgi Sistemi ©2019 Created by Ant UED
