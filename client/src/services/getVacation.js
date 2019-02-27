@@ -19,6 +19,11 @@ export function getVacation(userId) {
     return http.get(apiEndpoint + "/" + userId);
 }
 
+export function getTodayVacations() {
+    const apiEndpoint = apiUrl + "/getTodayVacations";
+    return http.get(apiEndpoint);
+}
+
 export function getHourlyVacation(userId) {
     const apiEndpoint3 = apiUrl + "/getHourlyVacation";
     return http.get(apiEndpoint3 + "/" + userId);

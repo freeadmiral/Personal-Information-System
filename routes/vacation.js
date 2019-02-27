@@ -134,17 +134,64 @@ router.post("/vacationReq", async (req, res, next) => {
 
 router.get('/getTodayVacations', async (req, res, next) => {
     let today = new Date().toISOString().slice(0, 10)
-    const vacations = await Vacation.find({
-        $or: [{
-            "date": today,
-            $where: `return this.entrDate >= ${today} && this.leaveDate <= ${today}`
-        }]
-    });
+    const vacations = await Vacation.aggregate([{
+
+            $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "_id",
+                as: "user"
+            }
+        },
+        {
+            $project: {
+                result: {
+                    $and: [{
+                        leaveDate: {
+                            $lte: ["$date", today]
+                        }
+                    }, {
+                        entryDate: {
+                            $gte: ["$date", today]
+                        }
+                    }]
+
+
+                },
+                entryDate: 1,
+                leaveDate: 1,
+                date: 1,
+
+            }
+        }
+    ]);
     if (!vacations)
         return res.status(404).json({
             msg: "invalid username"
         });
     res.send(vacations);
 });
+
+// router.get('/getTodayVacations', async (req, res, next) => {
+//     let today = new Date().toISOString().slice(0, 10)
+//     const vacations = await Vacation.find({
+
+//         $and: [{
+//             leaveDate: {
+//                 $lte: today
+//             }
+//         }, {
+//             entryDate: {
+//                 $gte: today
+//             }
+//         }]
+//     });
+//     if (!vacations)
+//         return res.status(404).json({
+//             msg: "invalid username"
+//         });
+//     res.send(vacations);
+// });
+
 
 module.exports = router;

@@ -4,11 +4,12 @@ import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
 import HomeCalendar from "./common/HomeCalendar";
 import { getbirthDates } from "../services/getAllUsers";
+import { getTodayVacations } from "../services/getVacation";
 
 const { Header, Content, Footer } = Layout;
 
 class Dashboard extends Component {
-  state = { currentUser: {}, birthDates: [{}] };
+  state = { currentUser: {}, birthDates: [{}], todayAllowed: [{}] };
 
   componentDidMount() {
     getbirthDates().then(response => {
@@ -16,11 +17,14 @@ class Dashboard extends Component {
         birthDates: response.data
       });
     });
+    getTodayVacations().then(response => {
+      this.setState({ todayAllowed: response.data });
+    });
   }
 
   render() {
-    const { birthDates } = this.state;
-    console.log("asd", birthDates);
+    const { birthDates, todayAllowed } = this.state;
+    console.log(todayAllowed);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />
