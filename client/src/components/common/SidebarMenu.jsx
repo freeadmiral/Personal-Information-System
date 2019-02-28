@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Menu, Icon, Layout } from "antd";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 class SidebarMenu extends Component {
   state = { collapsed: false };

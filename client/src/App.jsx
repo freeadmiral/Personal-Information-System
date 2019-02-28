@@ -3,7 +3,7 @@ import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import ForgotPassword from "./components/ForgotPassword";
-import dashboard2 from "./components/Dashboard";
+import Dashboard from "./components/Dashboard";
 import VacationReq from "./components/VacationReq";
 
 class App extends Component {
@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <Switch>
         <Route path="/forgotpassword" component={ForgotPassword} />
-        <Route exact path="/dashboard" component={dashboard2} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route path="/login" component={LoginForm} />
         <Route path="/vacation" component={VacationReq} />
         <Redirect from="/" to="/login" />

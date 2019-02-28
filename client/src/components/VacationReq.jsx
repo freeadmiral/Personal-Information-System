@@ -4,7 +4,7 @@ import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
 import Tab from "./common/Tab";
 import jwtDecode from "jwt-decode";
-import { getVacation, getHourlyVacation } from "./../services/getVacation";
+import { getDailyVacation, getHourlyVacation } from "./../services/getVacation";
 
 const { Header, Content, Footer } = Layout;
 
@@ -17,7 +17,7 @@ class VacationReq extends Component {
   componentDidMount() {
     const token = localStorage.token;
     const decoded = jwtDecode(token);
-    getVacation(decoded._id).then(response => {
+    getDailyVacation(decoded._id).then(response => {
       this.setState({ DailyVacationData: response });
     });
     getHourlyVacation(decoded._id).then(response => {

@@ -9,7 +9,7 @@ import { getTodayVacations } from "../services/getVacation";
 const { Header, Content, Footer } = Layout;
 
 class Dashboard extends Component {
-  state = { currentUser: {}, birthDates: [{}], todayAllowed: [{}] };
+  state = { currentUser: {}, birthDates: [{}], todayVacations: [{}] };
 
   componentDidMount() {
     getbirthDates().then(response => {
@@ -18,13 +18,12 @@ class Dashboard extends Component {
       });
     });
     getTodayVacations().then(response => {
-      this.setState({ todayAllowed: response.data });
+      this.setState({ todayVacations: response.data });
     });
   }
 
   render() {
-    const { birthDates, todayAllowed } = this.state;
-    console.log(todayAllowed);
+    const { birthDates, todayVacations } = this.state;
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />
@@ -69,7 +68,9 @@ class Dashboard extends Component {
                 </Col>
                 <Col span={8}>
                   <Card title="Bugün İzinliler" bordered={false}>
-                    Card content
+                    {todayVacations.map(today => (
+                      <h4>{today.userId}</h4>
+                    ))}
                   </Card>
                 </Col>
               </Row>

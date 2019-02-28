@@ -26,6 +26,7 @@ class ProfileMenu extends Component {
   };
   render() {
     const { currentUser } = this.state;
+    console.log(currentUser);
     const pStyle = {
       fontSize: 16,
       color: "rgba(0,0,0,0.85)",

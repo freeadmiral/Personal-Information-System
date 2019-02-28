@@ -13,9 +13,9 @@ function paramsSerializer(params) {
     })
 }
 
-const apiEndpoint = apiUrl + "/getVacation";
+const apiEndpoint = apiUrl + "/getDailyVacation";
 
-export function getVacation(userId) {
+export function getDailyVacation(userId) {
     return http.get(apiEndpoint + "/" + userId);
 }
 
