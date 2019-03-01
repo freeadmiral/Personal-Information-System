@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@amcharts/amcharts4": "^4.1.14",
     "@ant-design/icons-react": "^1.1.2",
     "antd": "^3.12.4",
     "axios": "^0.18.0",

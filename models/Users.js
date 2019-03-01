@@ -54,7 +54,8 @@ const UserSchema = new mongoose.Schema({
     default: Date.now
   },
   img: {
-    type: String
+    type: String,
+    default: "https://www.bsn.eu/wp-content/uploads/2016/12/user-icon-image-placeholder-300-grey.jpg"
   },
   responsibilites: {
     type: String

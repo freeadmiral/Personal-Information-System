@@ -3,8 +3,14 @@ import {
 } from "../config.json";
 import http from '../services/httpServices';
 
-let apiEndpoint = apiUrl + "/getUsers/birthDate";
+const apiEndpoint = apiUrl + "/getUsers/birthDate";
 
 export function getbirthDates() {
     return http.get(apiEndpoint);
+}
+
+const apiEndpoint2 = apiUrl + "/getAllUsers";
+
+export function getAllUsers() {
+    return http.get(apiEndpoint2);
 }

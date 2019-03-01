@@ -26,8 +26,6 @@ class VacationReq extends Component {
   }
 
   render() {
-    console.log("sdsa", this.state.DailyVacationData);
-
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu />

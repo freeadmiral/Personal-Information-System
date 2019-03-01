@@ -9,7 +9,7 @@ import { getUserDetails } from "../services/getUserDetails";
 
 const { Header, Content, Footer } = Layout;
 
-class Dashboard extends Component {
+class Dashboard2 extends Component {
   state = {
     currentUser: { isAdmin: false },
     birthDates: [{}],
@@ -28,6 +28,15 @@ class Dashboard extends Component {
   }
 
   render() {
+    const gridStyle = {
+      width: "80%",
+      textAlign: "center",
+      height: 200,
+      boxShadow: "rgba(0, 0, 0, 0.5) 0px 1px 10px 0px",
+      marginLeft: 110,
+      background: "#fff"
+    };
+
     const { birthDates, todayVacations } = this.state;
     return (
       <Layout style={{ minHeight: "100vh" }}>
@@ -46,41 +55,31 @@ class Dashboard extends Component {
               <ProfileMenu />
             </div>
           </Header>
-          <Content style={{ margin: "0 16px" }}>
-            <Breadcrumb style={{ margin: "16px 0" }}>
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
-            </Breadcrumb>
-            <Row>
-              <Row gutter={16}>
-                <Col span={8}>
-                  <Card title="Takvim" bordered={false}>
-                    <HomeCalendar />
-                  </Card>
-                </Col>
-                <Col span={8}>
-                  <Card title="Bugün Doğanlar" bordered={false}>
-                    {birthDates.map(data => (
-                      <Alert
-                        style={{ marginLeft: "50px" }}
-                        message={data.name + " " + data.surname}
-                        description={data.position}
-                        type="success"
-                        showIcon
-                      />
-                    ))}
-                  </Card>
-                </Col>
-                <Col span={8}>
-                  <Card title="Bugün İzinliler" bordered={false}>
-                    {todayVacations.map(today => (
-                      <h4>{today.userId}</h4>
-                    ))}
-                  </Card>
-                </Col>
-              </Row>
+          <div style={{ margin: 30 }}>
+            <Row gutter={24}>
+              <Col span={7}>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+              </Col>
+              <Col span={7}>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+              </Col>
+              <Col span={7}>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+              </Col>
             </Row>
-          </Content>
+            <Row style={{ paddingTop: 30 }} gutter={24}>
+              <Col span={7}>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+              </Col>
+              <Col span={7}>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+              </Col>
+              <Col span={7}>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+              </Col>
+            </Row>
+          </div>
+
           <Footer style={{ textAlign: "center" }}>
             Personel Bilgi Sistemi ©2019 Created by Ant UED
           </Footer>
@@ -90,4 +89,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default Dashboard2;

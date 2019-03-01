@@ -12,6 +12,7 @@ class SidebarMenu extends Component {
   render() {
     const SubMenu = Menu.SubMenu;
     const { Sider } = Layout;
+    const { currentUser } = this.props;
 
     return (
       <Sider
@@ -29,7 +30,7 @@ class SidebarMenu extends Component {
         />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
           <Menu.Item key="1">
-            <NavLink to="/dashboard  ">
+            <NavLink to="/dashboard">
               <Icon type="home" />
               <span>Ana Sayfa</span>
             </NavLink>
@@ -46,24 +47,12 @@ class SidebarMenu extends Component {
             <Menu.Item key="3">
               <NavLink to="/vacation">İzin Talepleri</NavLink>
             </Menu.Item>
-            <Menu.Item key="4">Bill</Menu.Item>
-            <Menu.Item key="5">Alex</Menu.Item>
           </SubMenu>
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <Icon type="team" />
-                <span>Team</span>
-              </span>
-            }
-          >
-            <Menu.Item key="6">Team 1</Menu.Item>
-            <Menu.Item key="8">Team 2</Menu.Item>
-          </SubMenu>
-          <Menu.Item key="9">
-            <Icon type="file" />
-            <span>File</span>
+          <Menu.Item key="2">
+            <NavLink to="/members">
+              <Icon type="team" />
+              <span>Çalışanlar</span>
+            </NavLink>
           </Menu.Item>
         </Menu>
       </Sider>

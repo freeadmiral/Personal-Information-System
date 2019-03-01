@@ -26,7 +26,7 @@ router.get("/getUser/:username", async (req, res, next) => {
         from: "companies",
         localField: "companyId",
         foreignField: "_id",
-        as: "şirket"
+        as: "company"
       }
     }
   ]);
@@ -42,6 +42,16 @@ router.get("/getUsers/birthDate", async (req, res, next) => {
   const users = await Users.find({
     $where: `return this.birthDate.getDate() === ${day} && this.birthDate.getMonth() === ${month}`
   }).exec();
+  if (!users) return res.status(404).json({
+    msg: "invalid username"
+  });
+  res.send(users);
+});
+
+router.get("/getAllUsers", async (req, res, next) => {
+  const users = await Users.find({
+    __v: 0
+  })
   if (!users) return res.status(404).json({
     msg: "invalid username"
   });
