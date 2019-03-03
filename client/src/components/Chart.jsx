@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import AmCharts from "@amcharts/amcharts3-react";
 import "../chart.css";
 
+
 // Generate random data
 function generateData() {
   var firstDate = new Date();
@@ -128,7 +129,7 @@ class Chart extends Component {
     };
 
     return (
-      <div className="App">
+      <div>
         <AmCharts.React
           style={{ width: "100%", height: "500px" }}
           options={config}

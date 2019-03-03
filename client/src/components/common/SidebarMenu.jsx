@@ -13,7 +13,7 @@ class SidebarMenu extends Component {
     const SubMenu = Menu.SubMenu;
     const { Sider } = Layout;
     const { currentUser } = this.props;
-
+    console.log("sadsa", currentUser);
     return (
       <Sider
         collapsible
@@ -27,7 +27,7 @@ class SidebarMenu extends Component {
             background: "rgba(255,255,255,.2)",
             margin: "16px"
           }}
-        />
+        ></div>
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
           <Menu.Item key="1">
             <NavLink to="/dashboard">
@@ -52,6 +52,12 @@ class SidebarMenu extends Component {
             <NavLink to="/members">
               <Icon type="team" />
               <span>Çalışanlar</span>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="4">
+            <NavLink to="/settings">
+              <Icon type="setting" />
+              <span>Ayarlar</span>
             </NavLink>
           </Menu.Item>
         </Menu>

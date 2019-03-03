@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Drawer, Avatar, Divider, Col, Row, Button } from "antd";
 import { getUserDetails } from "../../services/getUserDetails";
-import { decodedToken } from "./../../services/decodeToken";
+import { decodedToken } from "../../services/decodeToken";
+
 
 class ProfileMenu extends Component {
-  state = { visible: false, currentUser: {}, isLoading: true };
+  state = { visible: false, isLoading: true, currentUser: {} };
 
   componentDidMount() {
     const decoded = decodedToken();
@@ -26,7 +27,6 @@ class ProfileMenu extends Component {
   };
   render() {
     const { currentUser } = this.state;
-    console.log(currentUser);
     const pStyle = {
       fontSize: 16,
       color: "rgba(0,0,0,0.85)",

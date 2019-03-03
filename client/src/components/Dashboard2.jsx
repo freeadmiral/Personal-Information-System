@@ -1,17 +1,16 @@
 import React, { Component } from "react";
-import { Layout, Breadcrumb, Row, Col, Card, Alert } from "antd";
+import { Layout, Row, Col, Card, Icon } from "antd";
 import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
-import HomeCalendar from "./common/HomeCalendar";
 import { getbirthDates } from "../services/getAllUsers";
 import { getTodayVacations } from "../services/getVacation";
-import { getUserDetails } from "../services/getUserDetails";
 
-const { Header, Content, Footer } = Layout;
+
+const { Header, Footer } = Layout;
 
 class Dashboard2 extends Component {
   state = {
-    currentUser: { isAdmin: false },
+    currentUser: {},
     birthDates: [{}],
     todayVacations: [{}]
   };
@@ -25,19 +24,20 @@ class Dashboard2 extends Component {
     getTodayVacations().then(response => {
       this.setState({ todayVacations: response.data });
     });
+
   }
 
   render() {
     const gridStyle = {
       width: "80%",
       textAlign: "center",
-      height: 200,
+      height: 300,
       boxShadow: "rgba(0, 0, 0, 0.5) 0px 1px 10px 0px",
       marginLeft: 110,
       background: "#fff"
     };
 
-    const { birthDates, todayVacations } = this.state;
+    const { birthDates, todayVacations, currentUser } = this.state;
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu currentUser={this.state.currentUser} />
@@ -52,24 +52,28 @@ class Dashboard2 extends Component {
           >
             {" "}
             <div style={{ float: "right", margin: "6px", marginRight: "5%" }}>
-              <ProfileMenu />
+              <ProfileMenu currentUser={currentUser} />
             </div>
           </Header>
           <div style={{ margin: 30 }}>
             <Row gutter={24}>
               <Col span={7}>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Çalışan Dağılımı</Card.Grid>
               </Col>
               <Col span={7}>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Bugün Doğanlar <br /><br />{birthDates.map(data => (
+                  <div className="icon-list"><Icon type="gift" theme="twoTone" /><h4>{data.name + " " + data.surname}</h4><p>{data.position}</p></div>
+                ))}</Card.Grid>
               </Col>
               <Col span={7}>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Bugun İzinliler <br /><br />{todayVacations.map(today => (
+                  <h4>{today.userId}</h4>
+                ))}</Card.Grid>
               </Col>
             </Row>
             <Row style={{ paddingTop: 30 }} gutter={24}>
               <Col span={7}>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Resmi Tatiller</Card.Grid>
               </Col>
               <Col span={7}>
                 <Card.Grid style={gridStyle}>Content</Card.Grid>
@@ -79,7 +83,6 @@ class Dashboard2 extends Component {
               </Col>
             </Row>
           </div>
-
           <Footer style={{ textAlign: "center" }}>
             Personel Bilgi Sistemi ©2019 Created by Ant UED
           </Footer>

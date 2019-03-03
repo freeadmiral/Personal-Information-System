@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@amcharts/amcharts3-react": "^3.1.0",
     "@amcharts/amcharts4": "^4.1.14",
     "@ant-design/icons-react": "^1.1.2",
     "antd": "^3.12.4",
