@@ -5,7 +5,6 @@ import ProfileMenu from "./common/ProfileMenu";
 import { getbirthDates } from "../services/getAllUsers";
 import { getTodayVacations } from "../services/getVacation";
 
-
 const { Header, Footer } = Layout;
 
 class Dashboard2 extends Component {
@@ -24,7 +23,6 @@ class Dashboard2 extends Component {
     getTodayVacations().then(response => {
       this.setState({ todayVacations: response.data });
     });
-
   }
 
   render() {
@@ -61,14 +59,26 @@ class Dashboard2 extends Component {
                 <Card.Grid style={gridStyle}>Çalışan Dağılımı</Card.Grid>
               </Col>
               <Col span={7}>
-                <Card.Grid style={gridStyle}>Bugün Doğanlar <br /><br />{birthDates.map(data => (
-                  <div className="icon-list"><Icon type="gift" theme="twoTone" /><h4>{data.name + " " + data.surname}</h4><p>{data.position}</p></div>
-                ))}</Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  Bugün Doğanlar <br />
+                  <br />
+                  {birthDates.map(data => (
+                    <div key={data._id} className="icon-list">
+                      <Icon type="gift" theme="twoTone" />
+                      <h4>{data.name + " " + data.surname}</h4>
+                      <p>{data.position}</p>
+                    </div>
+                  ))}
+                </Card.Grid>
               </Col>
               <Col span={7}>
-                <Card.Grid style={gridStyle}>Bugun İzinliler <br /><br />{todayVacations.map(today => (
-                  <h4>{today.userId}</h4>
-                ))}</Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  Bugun İzinliler <br />
+                  <br />
+                  {todayVacations.map(today => (
+                    <h4 key={today._id}>{today.userId}</h4>
+                  ))}
+                </Card.Grid>
               </Col>
             </Row>
             <Row style={{ paddingTop: 30 }} gutter={24}>

@@ -20,7 +20,7 @@ class App extends Component {
         <Route path="/dash" component={Dashboard2} />
         <Route path="/settings" component={Settings} />
 
-        <Redirect from="/" to="/dashboard" />
+        <Redirect from="/" to="/login" />
       </Switch>
     );
   }

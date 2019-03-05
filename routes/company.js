@@ -35,7 +35,9 @@ router.get("/getCompany/:username", async (req, res, next) => {
         },
         {
             $project: {
-                name: "$company.companyName",
+                _id: 0,
+                _id: "$company._id",
+                name: "$company.name",
                 logo: "$company.logo"
             }
         }
@@ -45,5 +47,21 @@ router.get("/getCompany/:username", async (req, res, next) => {
     });
     res.send(user);
 });
+
+router.put("/:id", async (req, res, next) => {
+    const company = await Company.findByIdAndUpdate(
+        req.params.id, {
+            name: req.body.name
+        }, {
+            new: true
+        }
+    );
+    if (!company)
+        return res
+            .status(404)
+            .send("The company with the given ID was not found.");
+
+    res.send(company);
+})
 
 module.exports = router;
