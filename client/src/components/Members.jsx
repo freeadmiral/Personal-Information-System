@@ -3,6 +3,7 @@ import { Card, Row, Layout } from "antd";
 import { getAllUsers } from "../services/getAllUsers";
 import ProfileMenu from "./common/ProfileMenu";
 import SidebarMenu from "./common/SidebarMenu";
+import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 const { Header, Content, Footer } = Layout;
@@ -19,27 +20,29 @@ class Members extends Component {
   }
   render() {
     const { allMembers } = this.state;
-    var columns = allMembers.map(member => (
-      <Card
-        hoverable
-        style={{
-          width: 240,
-          margin: 50,
-          textAlign: "center",
-          borderRadius: 15,
-          boxShadow: "rgba(0, 0, 0, 0.5) 0px 1px 10px 0px"
-        }}
-        cover={
-          <img
-            key={member._id}
-            style={{ padding: 20 }}
-            alt="example"
-            src={member.img}
-          />
-        }
-      >
-        <Meta title={member.name} description={member.position} />
-      </Card>
+    const columns = allMembers.map(member => (
+      <Link to={`/member/${member.username}`}>
+        <Card
+          hoverable
+          style={{
+            width: 240,
+            margin: 50,
+            textAlign: "center",
+            borderRadius: 15,
+            boxShadow: "rgba(0, 0, 0, 0.5) 0px 1px 10px 0px"
+          }}
+          cover={
+            <img
+              key={member._id}
+              style={{ padding: 20 }}
+              alt={member.name}
+              src={member.img}
+            />
+          }
+        >
+          <Meta title={member.name} description={member.position} />
+        </Card>
+      </Link>
     ));
 
     return (

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Layout, Row, Col, Card, Icon } from "antd";
+import { Layout, Row, Col, Card, Icon, Statistic } from "antd";
 import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
 import { getbirthDates } from "../services/getAllUsers";
 import { getTodayVacations } from "../services/getVacation";
+import CountDown from "./CountDown";
 
-const { Header, Footer } = Layout;
+const { Header, Footer, Content } = Layout;
 
 class Dashboard2 extends Component {
   state = {
@@ -54,9 +55,38 @@ class Dashboard2 extends Component {
             </div>
           </Header>
           <div style={{ margin: 30 }}>
-            <Row gutter={24}>
+            <Row gutter={16}>
+              <Col span={12}>
+                {" "}
+                <Card.Grid style={gridStyle}>
+                  <CountDown />
+                </Card.Grid>
+              </Col>
+              <Col span={12}>
+                {" "}
+                <Card.Grid style={gridStyle}>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Statistic
+                        title="Toplam Çalışan"
+                        value={45}
+                        prefix={<Icon type="user" />}
+                      />
+                    </Col>
+                    <Col span={12}>
+                      <Statistic
+                        title="Bugün İzinliler"
+                        value={todayVacations.length}
+                        suffix={"/" + 45}
+                      />
+                    </Col>
+                  </Row>
+                </Card.Grid>
+              </Col>
+            </Row>
+            <Row style={{ margin: 50 }} gutter={24}>
               <Col span={7}>
-                <Card.Grid style={gridStyle}>Çalışan Dağılımı</Card.Grid>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
               </Col>
               <Col span={7}>
                 <Card.Grid style={gridStyle}>
@@ -79,17 +109,6 @@ class Dashboard2 extends Component {
                     <h4 key={today._id}>{today.userId}</h4>
                   ))}
                 </Card.Grid>
-              </Col>
-            </Row>
-            <Row style={{ paddingTop: 30 }} gutter={24}>
-              <Col span={7}>
-                <Card.Grid style={gridStyle}>Resmi Tatiller</Card.Grid>
-              </Col>
-              <Col span={7}>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-              </Col>
-              <Col span={7}>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
               </Col>
             </Row>
           </div>
