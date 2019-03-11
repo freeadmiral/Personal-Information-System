@@ -1,141 +1,59 @@
 import React, { Component } from "react";
-import AmCharts from "@amcharts/amcharts3-react";
-import "../chart.css";
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
+am4core.useTheme(am4themes_animated);
 
-// Generate random data
-function generateData() {
-  var firstDate = new Date();
-
-  var dataProvider = [];
-
-  for (var i = 0; i < 100; ++i) {
-    var date = new Date(firstDate.getTime());
-
-    date.setDate(i);
-
-    dataProvider.push({
-      date: date,
-      value: Math.floor(Math.random() * 100)
-    });
-  }
-
-  return dataProvider;
-}
-
-// Component which contains the dynamic state for the chart
 class Chart extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dataProvider: generateData(),
-      timer: null
-    };
-  }
-
   componentDidMount() {
-    this.setState({
-      // Update the chart dataProvider every 3 seconds
-      timer: setInterval(() => {
-        this.setState({
-          dataProvider: generateData()
-        });
-      }, 3000)
-    });
+    let chart = am4core.create("chartdiv", am4charts.XYChart);
+
+    chart.paddingRight = 20;
+
+    let data = [];
+    let visits = 10;
+    for (let i = 1; i < 366; i++) {
+      visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+      data.push({
+        date: new Date(2018, 0, i),
+        name: "name" + i,
+        value: visits
+      });
+    }
+
+    chart.data = data;
+
+    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis.renderer.grid.template.location = 0;
+
+    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.tooltip.disabled = true;
+    valueAxis.renderer.minWidth = 35;
+
+    let series = chart.series.push(new am4charts.LineSeries());
+    series.dataFields.dateX = "date";
+    series.dataFields.valueY = "value";
+
+    series.tooltipText = "{valueY.value}";
+    chart.cursor = new am4charts.XYCursor();
+
+    let scrollbarX = new am4charts.XYChartScrollbar();
+    scrollbarX.series.push(series);
+    chart.scrollbarX = scrollbarX;
+
+    this.chart = chart;
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.timer);
+    if (this.chart) {
+      this.chart.dispose();
+    }
   }
 
+  state = {};
   render() {
-    const config = {
-      type: "serial",
-      theme: "light",
-      marginRight: 40,
-      marginLeft: 40,
-      autoMarginOffset: 20,
-      mouseWheelZoomEnabled: true,
-      valueAxes: [
-        {
-          id: "v1",
-          axisAlpha: 0,
-          position: "left",
-          ignoreAxisWidth: true
-        }
-      ],
-      balloon: {
-        borderThickness: 1,
-        shadowAlpha: 0
-      },
-      graphs: [
-        {
-          id: "g1",
-          balloon: {
-            drop: true,
-            adjustBorderColor: false,
-            color: "#ffffff"
-          },
-          bullet: "round",
-          bulletBorderAlpha: 1,
-          bulletColor: "#FFFFFF",
-          bulletSize: 5,
-          hideBulletsCount: 50,
-          lineThickness: 2,
-          title: "red line",
-          useLineColorForBulletBorder: true,
-          valueField: "value",
-          balloonText: "<span style='font-size:18px;'>[[value]]</span>"
-        }
-      ],
-      chartScrollbar: {
-        graph: "g1",
-        oppositeAxis: false,
-        offset: 30,
-        scrollbarHeight: 80,
-        backgroundAlpha: 0,
-        selectedBackgroundAlpha: 0.1,
-        selectedBackgroundColor: "#888888",
-        graphFillAlpha: 0,
-        graphLineAlpha: 0.5,
-        selectedGraphFillAlpha: 0,
-        selectedGraphLineAlpha: 1,
-        autoGridCount: true,
-        color: "#AAAAAA"
-      },
-      chartCursor: {
-        pan: true,
-        valueLineEnabled: true,
-        valueLineBalloonEnabled: true,
-        cursorAlpha: 1,
-        cursorColor: "#258cbb",
-        limitToGraph: "g1",
-        valueLineAlpha: 0.2,
-        valueZoomable: true
-      },
-      valueScrollbar: {
-        oppositeAxis: false,
-        offset: 50,
-        scrollbarHeight: 10
-      },
-      categoryField: "date",
-      categoryAxis: {
-        parseDates: true,
-        dashLength: 1,
-        minorGridEnabled: true
-      },
-      dataProvider: this.state.dataProvider
-    };
-
-    return (
-      <div>
-        <AmCharts.React
-          style={{ width: "100%", height: "500px" }}
-          options={config}
-        />
-      </div>
-    );
+    return <div id="chartdiv" style={{ width: "100%", height: "500px" }} />;
   }
 }
 

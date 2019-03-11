@@ -58,6 +58,7 @@ router.get("/getAllUsers", async (req, res, next) => {
   res.send(users);
 });
 
+
 router.put("/updateUser/:id", async (req, res, next) => {
   const user = await Users.findByIdAndUpdate(
     req.params.id, {
