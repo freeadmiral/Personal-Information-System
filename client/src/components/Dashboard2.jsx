@@ -6,12 +6,13 @@ import { getbirthDates, getAllUsers } from "../services/getAllUsers";
 import { getTodayVacations } from "../services/getVacation";
 import Chart from "./Chart";
 import PieChart from "./PieChart";
+import { cityAnalytic } from "../services/cityAnalytic";
 
 const { Header, Footer, Content } = Layout;
 
 class Dashboard2 extends Component {
   state = {
-    allUsers: [],
+    cityAnalytic: [],
     currentUser: {},
     birthDates: [],
     todayVacations: []
@@ -26,8 +27,8 @@ class Dashboard2 extends Component {
     getTodayVacations().then(response => {
       this.setState({ todayVacations: response.data });
     });
-    getAllUsers().then(response => {
-      this.setState({ allUsers: response.data });
+    cityAnalytic().then(response => {
+      this.setState({ cityAnalytic: response.data });
     });
   }
 
@@ -41,7 +42,7 @@ class Dashboard2 extends Component {
       background: "#fff"
     };
 
-    const { allUsers, todayVacations, currentUser } = this.state;
+    const { cityAnalytic, todayVacations, currentUser } = this.state;
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu currentUser={this.state.currentUser} />
@@ -69,8 +70,8 @@ class Dashboard2 extends Component {
               <Col span={12}>
                 {" "}
                 <Card.Grid style={gridStyle}>
-                  {" "}
-                  <PieChart allUsers={allUsers} />
+                  {" Personelin İllere Göre Dağılımı "}
+                  <PieChart cityAnalytic={cityAnalytic} />
                 </Card.Grid>
               </Col>
               <Col span={12}>

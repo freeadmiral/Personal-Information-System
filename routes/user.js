@@ -18,7 +18,7 @@ router.post("/register", function (req, res, next) {
 router.get("/getUser/:username", async (req, res, next) => {
   const user = await Users.aggregate([{
       $match: {
-        'username': req.params.username
+        username: req.params.username
       }
     },
     {
@@ -30,34 +30,36 @@ router.get("/getUser/:username", async (req, res, next) => {
       }
     }
   ]);
-  if (!user) return res.status(404).json({
-    msg: "invalid username"
-  });
+  if (!user)
+    return res.status(404).json({
+      msg: "invalid username"
+    });
   res.send(user);
 });
 
 router.get("/getUsers/birthDate", async (req, res, next) => {
-  const day = (new Date()).getDate();
-  const month = (new Date()).getMonth();
+  const day = new Date().getDate();
+  const month = new Date().getMonth();
   const users = await Users.find({
     $where: `return this.birthDate.getDate() === ${day} && this.birthDate.getMonth() === ${month}`
   }).exec();
-  if (!users) return res.status(404).json({
-    msg: "invalid username"
-  });
+  if (!users)
+    return res.status(404).json({
+      msg: "invalid username"
+    });
   res.send(users);
 });
 
 router.get("/getAllUsers", async (req, res, next) => {
   const users = await Users.find({
     __v: 0
-  })
-  if (!users) return res.status(404).json({
-    msg: "invalid username"
   });
+  if (!users)
+    return res.status(404).json({
+      msg: "invalid username"
+    });
   res.send(users);
 });
-
 
 router.put("/updateUser/:id", async (req, res, next) => {
   const user = await Users.findByIdAndUpdate(
@@ -79,21 +81,33 @@ router.put("/updateUser/:id", async (req, res, next) => {
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       skills: req.body.skills
-
     }, {
       new: true
     }
   );
   if (!user)
-    return res
-      .status(404)
-      .send("The company with the given ID was not found.");
+    return res.status(404).send("The company with the given ID was not found.");
 
   res.send(user);
-})
+});
 
-
-
-
+router.get("/cityAnalytic", async (req, res, next) => {
+  const cityCount = await Users.aggregate([{
+    $match: {
+      __v: 0
+    }
+  }, {
+    $group: {
+      _id: "$city",
+      count: {
+        $sum: 1
+      }
+    }
+  }]);
+  if (!cityCount) return res.status(404).json({
+    msg: "yok"
+  });
+  res.send(cityCount);
+});
 
 module.exports = router;

@@ -17,11 +17,11 @@ class PieChart extends Component {
   initChart = () => {
     let chart = am4core.create("chartdiv1", am4charts.PieChart);
     chart.innerRadius = am4core.percent(50);
-    chart.data = this.props.allUsers;
+    chart.data = this.props.cityAnalytic;
     console.log(this.props);
     let pieSeries = chart.series.push(new am4charts.PieSeries());
-    pieSeries.dataFields.value = "_id";
-    pieSeries.dataFields.category = "city";
+    pieSeries.dataFields.value = "count";
+    pieSeries.dataFields.category = "_id";
     pieSeries.slices.template.stroke = am4core.color("#fff");
     pieSeries.slices.template.strokeWidth = 2;
     pieSeries.slices.template.strokeOpacity = 1;
