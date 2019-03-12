@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import { Layout, Row, Col, Card, Icon, Statistic } from "antd";
+import { Layout, Row, Col, Card } from "antd";
 import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
-import { getbirthDates, getAllUsers } from "../services/getAllUsers";
+import { getbirthDates } from "../services/getAllUsers";
 import { getTodayVacations } from "../services/getVacation";
 import Chart from "./Chart";
 import PieChart from "./PieChart";
-import { cityAnalytic } from "../services/cityAnalytic";
+import { cityAnalytic, positionAnalytic } from "../services/Analytics";
+import ColumnChart from "./ColumnChart";
 
 const { Header, Footer, Content } = Layout;
 
 class Dashboard2 extends Component {
   state = {
+    positions: [],
     cityAnalytic: [],
     currentUser: {},
     birthDates: [],
@@ -30,6 +32,9 @@ class Dashboard2 extends Component {
     cityAnalytic().then(response => {
       this.setState({ cityAnalytic: response.data });
     });
+    positionAnalytic().then(response => {
+      this.setState({ positions: response.data });
+    });
   }
 
   render() {
@@ -42,7 +47,7 @@ class Dashboard2 extends Component {
       background: "#fff"
     };
 
-    const { cityAnalytic, todayVacations, currentUser } = this.state;
+    const { cityAnalytic, positions, currentUser } = this.state;
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu currentUser={this.state.currentUser} />
@@ -63,7 +68,16 @@ class Dashboard2 extends Component {
           <div>
             <Row style={{ margin: 30 }} gutter={24}>
               <Col span={24}>
-                <Chart />
+                <Card.Grid
+                  style={{
+                    width: "100%",
+                    height: 600,
+                    background: "#fff",
+                    boxShadow: "rgba(0, 0, 0, 0.5) 0px 1px 10px 0px"
+                  }}
+                >
+                  <Chart />
+                </Card.Grid>
               </Col>
             </Row>
             <Row gutter={16}>
@@ -77,22 +91,7 @@ class Dashboard2 extends Component {
               <Col span={12}>
                 {" "}
                 <Card.Grid style={gridStyle}>
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Statistic
-                        title="Toplam Çalışan"
-                        value={45}
-                        prefix={<Icon type="user" />}
-                      />
-                    </Col>
-                    <Col span={12}>
-                      <Statistic
-                        title="Bugün İzinliler"
-                        value={todayVacations.length}
-                        suffix={"/" + 45}
-                      />
-                    </Col>
-                  </Row>
+                  <ColumnChart positions={positions} />
                 </Card.Grid>
               </Col>
             </Row>

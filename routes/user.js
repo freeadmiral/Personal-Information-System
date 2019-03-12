@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Users = require("../models/Users");
 
-router.post("/register", function (req, res, next) {
+router.post("/register", function(req, res, next) {
   const user = new Users(req.body);
   const promise = user.save();
 
@@ -16,7 +16,8 @@ router.post("/register", function (req, res, next) {
 });
 
 router.get("/getUser/:username", async (req, res, next) => {
-  const user = await Users.aggregate([{
+  const user = await Users.aggregate([
+    {
       $match: {
         username: req.params.username
       }
@@ -63,7 +64,8 @@ router.get("/getAllUsers", async (req, res, next) => {
 
 router.put("/updateUser/:id", async (req, res, next) => {
   const user = await Users.findByIdAndUpdate(
-    req.params.id, {
+    req.params.id,
+    {
       name: req.body.name,
       surname: req.body.surname,
       username: req.body.username,
@@ -81,7 +83,8 @@ router.put("/updateUser/:id", async (req, res, next) => {
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       skills: req.body.skills
-    }, {
+    },
+    {
       new: true
     }
   );
@@ -92,22 +95,49 @@ router.put("/updateUser/:id", async (req, res, next) => {
 });
 
 router.get("/cityAnalytic", async (req, res, next) => {
-  const cityCount = await Users.aggregate([{
-    $match: {
-      __v: 0
-    }
-  }, {
-    $group: {
-      _id: "$city",
-      count: {
-        $sum: 1
+  const cityCount = await Users.aggregate([
+    {
+      $match: {
+        __v: 0
+      }
+    },
+    {
+      $group: {
+        _id: "$city",
+        count: {
+          $sum: 1
+        }
       }
     }
-  }]);
-  if (!cityCount) return res.status(404).json({
-    msg: "yok"
-  });
+  ]);
+  if (!cityCount)
+    return res.status(404).json({
+      msg: "yok"
+    });
   res.send(cityCount);
+});
+
+router.get("/positionAnalytic", async (req, res, next) => {
+  const positionCount = await Users.aggregate([
+    {
+      $match: {
+        __v: 0
+      }
+    },
+    {
+      $group: {
+        _id: "$position",
+        count: {
+          $sum: 1
+        }
+      }
+    }
+  ]);
+  if (!positionCount)
+    return res.status(404).json({
+      msg: "yok"
+    });
+  res.send(positionCount);
 });
 
 module.exports = router;

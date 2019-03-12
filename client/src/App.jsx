@@ -10,6 +10,7 @@ import Settings from "./components/Settings";
 import MemberForm from "./components/MemberForm";
 import Chart from "./components/Chart";
 import PieChart from "./components/PieChart";
+import ColumnChart from "./components/ColumnChart";
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
         <Route path="/dash" component={Dashboard2} />
         <Route path="/member/:username" component={MemberForm} />
         <Route path="/settings" component={Settings} />
+        <Route path="/col" component={ColumnChart} />
         <Route path="/pie" component={PieChart} />
 
         <Redirect from="/" to="/login" />

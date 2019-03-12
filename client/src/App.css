@@ -18,8 +18,32 @@
   color: white;
 }
 
+.ant-input {
+  width: 250px !important;
+}
+
+.ant-select {
+  width: 250px !important;
+}
+
+form textarea.ant-input {
+  width: 650px !important;
+}
+
 .App-link {
   color: #61dafb;
+}
+
+.ant-select-selection--single {
+  width: 250px !important;
+}
+
+.ant-input-group .ant-input {
+  width: 180px !important;
+}
+
+.ant-select-enabled {
+  width: 70px !important;
 }
 
 @keyframes App-logo-spin {

@@ -10,9 +10,6 @@ class PieChart extends Component {
     super(props);
     this.state = {};
   }
-  componentDidMount() {
-    this.initChart();
-  }
 
   initChart = () => {
     let chart = am4core.create("chartdiv1", am4charts.PieChart);
@@ -31,8 +28,8 @@ class PieChart extends Component {
     pieSeries.hiddenState.properties.endAngle = -90;
     pieSeries.hiddenState.properties.startAngle = -90;
   };
-  componentWillReceiveProps(props) {
-    if (props) this.initChart();
+  componentWillReceiveProps() {
+    this.initChart();
   }
 
   render() {
