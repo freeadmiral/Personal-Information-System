@@ -53,6 +53,19 @@ class SidebarMenu extends Component {
               <span>Çalışanlar</span>
             </NavLink>
           </Menu.Item>
+          <SubMenu
+            key="sub2"
+            title={
+              <span>
+                <Icon type="team" />
+                <span>Ekip</span>
+              </span>
+            }
+          >
+            <Menu.Item key="3">
+              <NavLink to="/newmember">Ekip Üyesi Ekle</NavLink>
+            </Menu.Item>
+          </SubMenu>
           <Menu.Item key="4">
             <NavLink to="/settings">
               <Icon type="setting" />

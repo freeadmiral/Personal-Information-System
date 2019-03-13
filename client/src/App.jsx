@@ -11,6 +11,7 @@ import MemberForm from "./components/MemberForm";
 import Chart from "./components/Chart";
 import PieChart from "./components/PieChart";
 import ColumnChart from "./components/ColumnChart";
+import NewMemberForm from "./components/NewMemberForm";
 
 class App extends Component {
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
         <Route path="/login" component={LoginForm} />
         <Route path="/vacation" component={VacationReq} />
         <Route path="/dash" component={Dashboard2} />
+        <Route path="/newmember" component={NewMemberForm} />
         <Route path="/member/:username" component={MemberForm} />
         <Route path="/settings" component={Settings} />
         <Route path="/col" component={ColumnChart} />

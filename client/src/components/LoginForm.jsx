@@ -27,7 +27,7 @@ class LoginForm extends FormClass {
   render() {
     const { account } = this.state;
     return (
-      <React.Fragment>
+      <div>
         <div>
           <Avatar
             style={{ marginLeft: "47.2%", marginBottom: "3%" }}
@@ -95,7 +95,7 @@ class LoginForm extends FormClass {
             </Button>
           </Form>
         </Card>
-      </React.Fragment>
+      </div>
     );
   }
 }
