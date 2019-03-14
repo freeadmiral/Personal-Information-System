@@ -20,7 +20,8 @@ export function updateCompany(values, id) {
         url: apiEndpoint + "/" + id,
         data: paramsSerializer({
             id: id,
-            name: values.name
+            name: values.name,
+            logo: values.logo[0].thumbUrl
         })
     });
 }

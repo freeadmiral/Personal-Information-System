@@ -4,6 +4,7 @@ import { getUserDetails } from "../services/getUserDetails";
 import { updateUser } from "../services/updateUser";
 import "../App.css";
 import SubMemberForm from "./common/SubMemberForm";
+import moment from "moment";
 
 const success = () => {
   message.success("Başarıyla güncellendi");
@@ -11,6 +12,7 @@ const success = () => {
 const error = () => {
   message.error("There is an error");
 };
+const dateFormat = "YYYY/MM/DD";
 
 class MemberForm extends SubMemberForm {
   constructor(props) {
@@ -35,14 +37,16 @@ class MemberForm extends SubMemberForm {
   componentDidMount() {
     getUserDetails(this.props.match.params.username).then(res => {
       this.setState({ user: res.data[0] });
+      console.log(res.data);
+
       this.props.form.setFieldsValue({
         name: this.state.user.name,
         surname: this.state.user.surname,
         username: this.state.user.username,
-        // birthDate: moment(this.state.user.birthDate).format("YYYY-MM-DD"),
+        birthDate: moment(this.state.user.birthDate, dateFormat),
         password: this.state.user.password,
         department: this.state.user.department,
-        // entryDate: moment(this.state.user.entryDate).format("YYYY-MM-DD"),
+        entryDate: moment(this.state.user.entryDate, dateFormat),
         position: this.state.user.position,
         gender: this.state.user.gender,
         registraitonNo: this.state.user.registraitonNo,

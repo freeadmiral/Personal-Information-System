@@ -48,7 +48,6 @@ export function newDailyVacation(values, userId) {
 }
 
 export function newHourlyVaction(values, userId) {
-    console.log("servis ", values);
     axios({
         method: 'post',
         url: apiEndpoint2,

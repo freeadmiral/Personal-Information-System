@@ -3,28 +3,27 @@ import {
 } from "../config.json";
 import axios from 'axios';
 import qs from 'qs';
-
+import moment from 'moment';
 
 function paramsSerializer(params) {
     return qs.stringify(params, {
         encode: false
     })
 }
+const apiEndpoint = apiUrl + "/register";
 
-const apiEndpoint = apiUrl;
-
-export function updateUser(values, id) {
-    console.log("servis ", values);
+export function createUser(values) {
     axios({
-        method: 'put',
-        url: apiEndpoint + "/updateUser/" + id,
+        method: 'post',
+        url: apiEndpoint,
         data: paramsSerializer({
-            id: id,
             name: values.name,
             surname: values.surname,
             username: values.username,
+            birthDate: values.birthDate,
             password: values.password,
             department: values.department,
+            entryDate: values.entryDate,
             position: values.position,
             gender: values.gender,
             registraitonNo: values.registraitonNo,
@@ -34,9 +33,7 @@ export function updateUser(values, id) {
             website: values.website,
             email: values.email,
             phoneNumber: values.phoneNumber,
-            skills: values.skills,
-            birthDate: values.birthDate,
-            entryDate: values.entryDate
+            skills: values.skills
         })
     });
 }

@@ -49,6 +49,7 @@ router.get("/getCompany/:username", async (req, res, next) => {
 });
 
 router.put("/:id", async (req, res, next) => {
+    console.log(req.body);
     const company = await Company.findByIdAndUpdate(
         req.params.id, {
             name: req.body.name

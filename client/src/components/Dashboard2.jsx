@@ -97,7 +97,7 @@ class Dashboard2 extends Component {
             </Row>
           </div>
           <Footer style={{ textAlign: "center" }}>
-            Personel Bilgi Sistemi ©2019 Created by Ant UED
+            Personel Bilgi Sistemi ©2019 Created by E.Şahin
           </Footer>
         </Layout>
       </Layout>

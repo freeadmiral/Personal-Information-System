@@ -13,7 +13,7 @@ import {
   Row,
   Col
 } from "antd";
-
+const dateFormat = "YYYY/MM/DD";
 const { Option } = Select;
 const { Header, Footer } = Layout;
 
@@ -28,7 +28,6 @@ class SubMemberForm extends Component {
       background: "#fff"
     };
     const { getFieldDecorator } = this.props.form;
-    const { user } = this.state;
     const prefixSelector = getFieldDecorator("prefix", {
       initialValue: "+90"
     })(
@@ -101,7 +100,9 @@ class SubMemberForm extends Component {
                     <Row gutter={8}>
                       <Col span={8}>
                         <Form.Item label="Doğum Tarihi">
-                          {getFieldDecorator("birthDate")(<DatePicker />)}
+                          {getFieldDecorator("birthDate", {})(
+                            <DatePicker format={dateFormat} />
+                          )}
                         </Form.Item>
                       </Col>
                       <Col span={8}>
@@ -133,7 +134,9 @@ class SubMemberForm extends Component {
                     <Row gutter={8}>
                       <Col span={8}>
                         <Form.Item label="Giriş Tarihi">
-                          {getFieldDecorator("entryDate")(<DatePicker />)}
+                          {getFieldDecorator("entryDate")(
+                            <DatePicker format={dateFormat} />
+                          )}
                         </Form.Item>
                       </Col>
                       <Col span={8}>
@@ -245,7 +248,7 @@ class SubMemberForm extends Component {
                     </Form.Item>
                     <Form.Item>
                       <Button type="primary" htmlType="submit">
-                        Güncelle
+                        Kaydet
                       </Button>
                     </Form.Item>
                   </Form>
@@ -253,7 +256,7 @@ class SubMemberForm extends Component {
               </Card.Grid>
             </div>
             <Footer style={{ textAlign: "center" }}>
-              Personel Bilgi Sistemi ©2019 Created by Ant UED
+              Personel Bilgi Sistemi ©2019 Created by E.Şahin
             </Footer>
           </Layout>
         </Layout>

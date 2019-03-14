@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Users = require("../models/Users");
+const moment = require('moment');
 
-router.post("/register", function(req, res, next) {
+router.post("/register", function (req, res, next) {
   const user = new Users(req.body);
   const promise = user.save();
 
@@ -16,8 +17,7 @@ router.post("/register", function(req, res, next) {
 });
 
 router.get("/getUser/:username", async (req, res, next) => {
-  const user = await Users.aggregate([
-    {
+  const user = await Users.aggregate([{
       $match: {
         username: req.params.username
       }
@@ -64,15 +64,14 @@ router.get("/getAllUsers", async (req, res, next) => {
 
 router.put("/updateUser/:id", async (req, res, next) => {
   const user = await Users.findByIdAndUpdate(
-    req.params.id,
-    {
+    req.params.id, {
       name: req.body.name,
       surname: req.body.surname,
       username: req.body.username,
-      // birthDate: moment(req.body.birthDate).format("YYYY-MM-DD"),
+      birthDate: moment(req.body.birthDate).format("YYYY-MM-DD"),
       password: req.body.password,
       department: req.body.department,
-      // entryDate: moment(req.body.entryDate).format("YYYY-MM-DD"),
+      entryDate: moment(req.body.entryDate).format("YYYY-MM-DD"),
       position: req.body.position,
       gender: req.body.gender,
       registraitonNo: req.body.registraitonNo,
@@ -83,8 +82,7 @@ router.put("/updateUser/:id", async (req, res, next) => {
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       skills: req.body.skills
-    },
-    {
+    }, {
       new: true
     }
   );
@@ -95,8 +93,7 @@ router.put("/updateUser/:id", async (req, res, next) => {
 });
 
 router.get("/cityAnalytic", async (req, res, next) => {
-  const cityCount = await Users.aggregate([
-    {
+  const cityCount = await Users.aggregate([{
       $match: {
         __v: 0
       }
@@ -118,8 +115,7 @@ router.get("/cityAnalytic", async (req, res, next) => {
 });
 
 router.get("/positionAnalytic", async (req, res, next) => {
-  const positionCount = await Users.aggregate([
-    {
+  const positionCount = await Users.aggregate([{
       $match: {
         __v: 0
       }
