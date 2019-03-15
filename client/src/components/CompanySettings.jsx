@@ -40,7 +40,7 @@ class CompanySettings extends Component {
           uid: "12312",
           name: "",
           status: "accept",
-          url: res.data[0].logo,
+          url: this.state.company.logo,
           size: 10,
           type: ""
         }

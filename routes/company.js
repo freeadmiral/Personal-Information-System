@@ -52,7 +52,8 @@ router.put("/:id", async (req, res, next) => {
     console.log(req.body);
     const company = await Company.findByIdAndUpdate(
         req.params.id, {
-            name: req.body.name
+            name: req.body.name,
+            logo: req.body.logo
         }, {
             new: true
         }
