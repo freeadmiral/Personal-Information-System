@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Row, Col, Card } from "antd";
+import { Layout, Row, Col, Card, Spin } from "antd";
 import SidebarMenu from "./common/SidebarMenu";
 import ProfileMenu from "./common/ProfileMenu";
 import { getbirthDates } from "../services/getAllUsers";
@@ -17,7 +17,8 @@ class Dashboard2 extends Component {
     cityAnalytic: [],
     currentUser: {},
     birthDates: [],
-    todayVacations: []
+    todayVacations: [],
+    isLoading: true
   };
 
   componentDidMount() {
@@ -30,7 +31,7 @@ class Dashboard2 extends Component {
       this.setState({ todayVacations: response.data });
     });
     cityAnalytic().then(response => {
-      this.setState({ cityAnalytic: response.data });
+      this.setState({ cityAnalytic: response.data, isLoading: false });
     });
     positionAnalytic().then(response => {
       this.setState({ positions: response.data });
@@ -47,7 +48,7 @@ class Dashboard2 extends Component {
       background: "#fff"
     };
 
-    const { cityAnalytic, positions, currentUser } = this.state;
+    const { cityAnalytic, positions, currentUser, isLoading } = this.state;
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <SidebarMenu currentUser={this.state.currentUser} />
@@ -85,7 +86,11 @@ class Dashboard2 extends Component {
                 {" "}
                 <Card.Grid style={gridStyle}>
                   {" Personelin İllere Göre Dağılımı "}
-                  <PieChart cityAnalytic={cityAnalytic} />
+                  {!isLoading ? (
+                    <PieChart cityAnalytic={cityAnalytic} />
+                  ) : (
+                    <Spin />
+                  )}
                 </Card.Grid>
               </Col>
               <Col span={12}>

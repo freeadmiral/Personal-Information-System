@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Row, Layout } from "antd";
+import { Card, Row, Layout, Spin } from "antd";
 import { getAllUsers } from "../services/getAllUsers";
 import ProfileMenu from "./common/ProfileMenu";
 import SidebarMenu from "./common/SidebarMenu";
@@ -10,12 +10,13 @@ const { Header, Content, Footer } = Layout;
 
 class Members extends Component {
   state = {
-    allMembers: [{}]
+    allMembers: [],
+    isLoading: true
   };
 
   componentDidMount() {
     getAllUsers().then(res => {
-      this.setState({ allMembers: res.data });
+      this.setState({ allMembers: res.data, isLoading: false });
     });
   }
   render() {
@@ -62,9 +63,13 @@ class Members extends Component {
               <ProfileMenu />
             </div>
           </Header>
-          <Row type="flex" align="middle">
-            {columns}
-          </Row>
+          {!this.state.isLoading ? (
+            <Row type="flex" align="middle">
+              {columns}
+            </Row>
+          ) : (
+            <Spin />
+          )}
           <Footer style={{ textAlign: "center" }}>
             Personel Bilgi Sistemi ©2019 Created by Ant UED
           </Footer>
